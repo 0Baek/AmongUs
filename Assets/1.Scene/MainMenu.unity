@@ -12369,7 +12369,7 @@ MonoBehaviour:
     deliveryTimeEmaDuration: 2
   connectionQualityInterval: 3
   timeInterpolationGui: 0
-  showRoomGUI: 1
+  showRoomGUI: 0
   minPlayers: 1
   roomPlayerPrefab: {fileID: 6735509323060278710, guid: 9ba73e563a9fa4549b0d00fc9194797b, type: 3}
   RoomScene: Assets/1.Scene/GameRoom.unity
@@ -12377,6 +12377,8 @@ MonoBehaviour:
   _allPlayersReady: 0
   roomSlots: []
   clientIndex: 0
+  minPlayerCount: 0
+  imposterCount: 0
 --- !u!4 &1836826313
 Transform:
   m_ObjectHideFlags: 0

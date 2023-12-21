@@ -84,6 +84,7 @@ public class CreateRoomUI : MonoBehaviour
     public void updateMaxPlayerCount(int count)
     {
         roomData.maxPlayerCount = count;
+        Debug.Log(count);
         for (int i = 0; i < maxPlayerCountBtn.Count; i++)
         {
             if (i==count-4)

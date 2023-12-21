@@ -27,6 +27,7 @@ public class OnlineUI : MonoBehaviour
     {
         if (nicknameInputField.text!="")
         {
+            PlayerSettings.ninkname = nicknameInputField.text;
             var manager = RoomManager.singleton;
             manager.StartClient();
 

@@ -151,7 +151,7 @@ public class GameRuleStore : NetworkBehaviour
     private Text movespeedText;
     public void SetMoveSpeed_Hook(float _, float value)
     {
-        movespeedText.text = string.Format("{0:0,0}x", value);
+        movespeedText.text = string.Format("{0:0.00}x", value);
         UpdateGameRuleOverview();
     }
     public void OnChangeMoveSpeed(bool isPlus)
@@ -167,7 +167,7 @@ public class GameRuleStore : NetworkBehaviour
     private Text crewSightText;
     public void SetCrewSight_Hook(float _,float value)
     {
-        crewSightText.text = string.Format("{0:0,0}x", value);
+        crewSightText.text = string.Format("{0:0.00}x", value);
         UpdateGameRuleOverview();
     }
     public void OnChangeCrewSight(bool isPlus)
@@ -183,7 +183,7 @@ public class GameRuleStore : NetworkBehaviour
     private Text imposterSightText;
     public void SetImposterSight_Hook(float _,float value)
     {
-        imposterSightText.text = string.Format("{0:0,0}x", value);
+        imposterSightText.text = string.Format("{0:0.00}x", value);
         UpdateGameRuleOverview();
     }
     public void OnChangeImposterSight(bool isPlus)
@@ -199,7 +199,7 @@ public class GameRuleStore : NetworkBehaviour
     private Text killCooldownText;
     public void SetKillCooldown_Hook(float _, float value)
     {
-        killCooldownText.text = string.Format("{0:0,0}s", value);
+        killCooldownText.text = string.Format("{0:0.0}s", value);
         UpdateGameRuleOverview();
     }
     public void OnChangeKillCooldown(bool isPlus)
@@ -308,6 +308,13 @@ public class GameRuleStore : NetworkBehaviour
         isRuleToggle.isOn = false;
     }
 
+    [SyncVar(hook =nameof(SetImposterCount_Hook))]
+    private int imposterCount;
+    private void SetImposterCount_Hook(int _, int value)
+    {
+        UpdateGameRuleOverview();
+    }
+
     [SerializeField]
     private Text gameRuleOverview;
 
@@ -316,7 +323,7 @@ public class GameRuleStore : NetworkBehaviour
         var manager = NetworkManager.singleton as RoomManager; //Ä³½ºÆÃ 
         StringBuilder sb = new StringBuilder(isRule ? "ÃßÃµ ¼³Á¤\n" : "Ä¿½ºÅÒ ¼³Á¤\n");
         sb.Append("¸Ê:The Skeld\n");
-        sb.Append($"#ÀÓÆ÷½ºÅÍ:{manager.imposterCount}\n");
+        sb.Append($"#ÀÓÆ÷½ºÅÍ:{imposterCount}\n");
         sb.Append(string.Format("Confirm Ejects:{0}\n", confirmEjects ? "ÄÑÁü" : "²¨Áü"));
         sb.Append($"±ä±Þ È¸ÀÇ:{emergencyMeetings}\n");
         sb.Append(string.Format("Anonymous Votes:{0}\n", anonymousVotes ? "ÄÑÁü" : "²¨Áü"));
@@ -357,6 +364,10 @@ public class GameRuleStore : NetworkBehaviour
     {
         if (isServer)
         {
+            var manager = NetworkManager.singleton as RoomManager;
+            imposterCount = manager.imposterCount;
+            anonymousVotes = false;
+            taskBarUpdates = ETaskBarUpdates.Always;
             SetRecommendGameRule();
         }
     }

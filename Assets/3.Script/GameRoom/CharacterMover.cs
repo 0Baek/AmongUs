@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Mirror;
 
 public class CharacterMover : NetworkBehaviour
@@ -31,6 +32,15 @@ public class CharacterMover : NetworkBehaviour
 
     [SyncVar(hook =nameof(SetPlayerColor_Hook))]
     public EPlayerColor playercolor;
+
+    [SyncVar(hook =nameof(SetNickname_Hook))]
+    public string nickname;
+    [SerializeField]
+    private Text nicknameText;
+    public void SetNickname_Hook(string _, string value)
+    {
+        nicknameText.text = value;
+    }
 
     public void SetPlayerColor_Hook(EPlayerColor oldColor, EPlayerColor newColor)
     {
@@ -102,6 +112,14 @@ public class CharacterMover : NetworkBehaviour
             }
             animator.SetBool("isMove", isMove);
 
+        }
+        if (transform.localScale.x<0)
+        {
+            nicknameText.transform.localScale = new Vector3(-1f, 1f, 1f);
+        }
+        else if (transform.localScale.x>0)
+        {
+            nicknameText.transform.localScale = new Vector3(1f, 1f, 1f);
         }
     }
 
