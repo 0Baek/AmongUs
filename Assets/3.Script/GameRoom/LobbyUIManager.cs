@@ -11,8 +11,8 @@ public class LobbyUIManager : MonoBehaviour
  
 
     [SerializeField] private CustumizeUI custumizeUI;
-
     public CustumizeUI CustumizeUI { get { return custumizeUI; } }
+     
 
     [SerializeField]
     private Button useButton;
@@ -22,6 +22,7 @@ public class LobbyUIManager : MonoBehaviour
     [SerializeField]
     private Button startButton;
 
+  
 
     [SerializeField]
     private GameRoomPlayerCount gameRoomPlayerCount;
@@ -60,15 +61,15 @@ public class LobbyUIManager : MonoBehaviour
     }
      public void OnClickStartButton()
     {
-        var players = FindObjectsOfType<NetworkRoomPlayer>();
-
-        
-     /*   for (int i = 0; i < players.Length; i++)
+        var players = FindObjectsOfType<AmongUsRoomplayer>();
+        for (int i = 0; i < players.Length; i++)
         {
-            players[i].readyToBegin = true;
-        }*/
+            players[i].CmdChangeReadyState(true);
+        }
         var manager = NetworkManager.singleton as RoomManager;
+       
         manager.ServerChangeScene(manager.GameplayScene);
     }
+
 
 }

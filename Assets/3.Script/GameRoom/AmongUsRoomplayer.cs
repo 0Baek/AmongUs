@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class AmongUsRoomplayer : NetworkRoomPlayer
 {
@@ -34,15 +35,76 @@ public class AmongUsRoomplayer : NetworkRoomPlayer
         LobbyUIManager.instance.CustumizeUI.UpdateSelectColorBtn(newColor);
       
     }
+
+
+
+
+
     [SyncVar]
     public string nickname;
     public CharacterMover lobbyPlayerCharacter;
 
 
+    [Command]
+    public void CmdSetNickname(string nick)
+    {
+        // 중복 체크
+        if (!IsNicknameDuplicate(nick))
+        {
+            nickname = nick;
+            lobbyPlayerCharacter.nickname = nick;
+        }
+        // 중복일 경우 처리 (예: 에러 메시지 전송 또는 다른 조치)
+        else
+        {
+            //중복
+           
+            connectionToClient.Disconnect();
+            
+        }
+    }
+    private bool IsNicknameDuplicate(string newNickname)
+    {
+        var players = FindObjectsOfType<AmongUsRoomplayer>();
+        foreach (var player in players)
+        {
+            // 자신의 경우 무시
+            if (player == this)
+                continue;
+
+            // 중복된 닉네임이 있는지 확인
+            if (player.nickname == newNickname)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+
+
+    /*    [SyncVar(hook = nameof(OnConnectionChanged))]
+        public bool connection;
+
+        [Command]
+        public void CmdSetConnection(bool isConnected)
+        {
+            connection = isConnected;
+        }
+
+        void OnConnectionChanged(bool oldValue, bool newValue)
+        {
+            connection = newValue;
+        }*/
+
+
+
     public void Start()
     {
         base.Start();
-
+      
         if (isServer)
         {
             SpawnLobbyPlayerCharacter();
@@ -62,12 +124,12 @@ public class AmongUsRoomplayer : NetworkRoomPlayer
             LobbyUIManager.instance.CustumizeUI.UpdateUnSelectColorBtn(playerColor);
         }
     }
-    [Command]
+ /*   [Command]
     public void CmdSetNickname(string nick)
     {
         nickname = nick;
         lobbyPlayerCharacter.nickname = nick;
-    }
+    }*/
 
 
     //클라이언트에서 함수를 호출하면 함수 동작이 서버에서 실행되게하는 어트리뷰트
@@ -134,11 +196,5 @@ public class AmongUsRoomplayer : NetworkRoomPlayer
          */
 
     }
-    public void start()
-    {
-        if (readyToBegin)
-        {
-            Debug.Log("?");
-        }
-    }
+  
 }

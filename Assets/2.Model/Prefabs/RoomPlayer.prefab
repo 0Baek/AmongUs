@@ -51,7 +51,9 @@ MonoBehaviour:
   readyToBegin: 0
   index: 0
   playerColor: 0
+  nickname: 
   lobbyPlayerCharacter: {fileID: 0}
+  duplication: {fileID: 0}
 --- !u!114 &3950026067893496646
 MonoBehaviour:
   m_ObjectHideFlags: 0
