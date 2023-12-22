@@ -563,7 +563,6 @@ MonoBehaviour:
   useButton: {fileID: 1638902712}
   originUseButtonSprite: {fileID: 21300000, guid: 1abf9d0ad96ed484ab3f289f79f9404d, type: 3}
   startButton: {fileID: 924868515}
-  duplication: {fileID: 1247470667}
   gameRoomPlayerCount: {fileID: 150366694}
 --- !u!1 &69636564
 GameObject:
@@ -16059,7 +16058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0.6622224, a: 1}
+  m_Color: {r: 0.5943396, g: 0.042052325, b: 0.40807822, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

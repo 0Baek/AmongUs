@@ -75,7 +75,7 @@ public class CustumizeUI : MonoBehaviour
     }
     public void UpdateSelectColorBtn(EPlayerColor color)
     {
-        colorSelects[(int)color].SetInteractable(false);
+        colorSelects[(int)color].SetInteractable(false); 
     }
     public void UpdateUnSelectColorBtn(EPlayerColor color)
     {

@@ -11,7 +11,7 @@ public class WeaponPipelightStart : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            var child = transform.GetChild(1).GetComponent<WeaponPipelight>();
+            var child = transform.GetChild(i).GetComponent<WeaponPipelight>();
             if (child)
             {
                 lights.Add(child);
