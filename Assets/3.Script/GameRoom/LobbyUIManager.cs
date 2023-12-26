@@ -61,12 +61,15 @@ public class LobbyUIManager : MonoBehaviour
     }
      public void OnClickStartButton()
     {
-        var players = FindObjectsOfType<AmongUsRoomplayer>();
+        var players = FindObjectsOfType<AmongUsRoomplayer>(); 
+        
         for (int i = 0; i < players.Length; i++)
         {
-            players[i].CmdChangeReadyState(true);
+            // players[i].CmdChangeReadyState(true);     12.26 문제해결  주석처리코드로 빌드할시 클라이언트들이 게임씬으로 가면 다 튕겨버림 
+            players[i].CmdSetConnection(true);
         }
         var manager = NetworkManager.singleton as RoomManager;
+        manager.gameRuleData = FindObjectOfType<GameRuleStore>().GetGameRuleData();
        
         manager.ServerChangeScene(manager.GameplayScene);
     }

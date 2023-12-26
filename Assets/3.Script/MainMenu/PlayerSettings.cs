@@ -10,5 +10,5 @@ public enum ECountrolType
 public class PlayerSettings
 {
     public static ECountrolType countrolType;
-    public static string ninkname;
+    public static string nickname;
 }

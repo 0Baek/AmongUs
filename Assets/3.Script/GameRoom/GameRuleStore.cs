@@ -18,6 +18,7 @@ public struct GameRuleData
     public int emergencyMeetings;
     public int emergencyMeetingsCooldown;
     public int meetingsTime;
+    public int voteTime;
     public bool anonymousVotes;
     public float moveSpeed;
     public float crewSight;
@@ -370,5 +371,28 @@ public class GameRuleStore : NetworkBehaviour
             taskBarUpdates = ETaskBarUpdates.Always;
             SetRecommendGameRule();
         }
+    }
+    public GameRuleData GetGameRuleData()
+    {
+        return new GameRuleData()
+        {
+            anonymousVotes = anonymousVotes,
+            commonTask = commonTask,
+            complexTask = complexTask,
+            confirmEjects = confirmEjects,
+            crewSight = crewSight,
+            emergencyMeetings = emergencyMeetings,
+            emergencyMeetingsCooldown = emergencyMeetingsCooldown,
+            imposterSight = imposterSight,
+            killRange = killRange,
+            KillCooldown = KillCooldown,
+            meetingsTime = meetingsTime,
+            moveSpeed = moveSpeed,
+            simpleTask = simpleTask,
+            taskBarUpdates = taskBarUpdates,
+            visualTaske = visualTaske,
+            voteTime = voteTime
+
+        };
     }
 }

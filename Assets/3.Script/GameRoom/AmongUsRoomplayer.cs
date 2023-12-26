@@ -85,7 +85,7 @@ public class AmongUsRoomplayer : NetworkRoomPlayer
 
 
 
-    /*    [SyncVar(hook = nameof(OnConnectionChanged))]
+        [SyncVar(hook = nameof(OnConnectionChanged))]
         public bool connection;
 
         [Command]
@@ -97,7 +97,7 @@ public class AmongUsRoomplayer : NetworkRoomPlayer
         void OnConnectionChanged(bool oldValue, bool newValue)
         {
             connection = newValue;
-        }*/
+        }
 
 
 
@@ -112,7 +112,7 @@ public class AmongUsRoomplayer : NetworkRoomPlayer
         }
         if (isLocalPlayer)
         {
-            CmdSetNickname(PlayerSettings.ninkname);
+            CmdSetNickname(PlayerSettings.nickname);
         }
         LobbyUIManager.instance.GameRoomPlayerCount.UpdatePlayerCount();
     }

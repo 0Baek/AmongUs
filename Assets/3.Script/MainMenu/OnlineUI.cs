@@ -14,7 +14,7 @@ public class OnlineUI : MonoBehaviour
     {
         if (nicknameInputField.text !="")
         {
-            PlayerSettings.ninkname = nicknameInputField.text;
+            PlayerSettings.nickname = nicknameInputField.text;
             creatRoomUI.SetActive(true);
             gameObject.SetActive(false);
         }
@@ -27,7 +27,7 @@ public class OnlineUI : MonoBehaviour
     {
         if (nicknameInputField.text!="")
         {
-            PlayerSettings.ninkname = nicknameInputField.text;
+            PlayerSettings.nickname = nicknameInputField.text;
             var manager = RoomManager.singleton;
             manager.StartClient();
 

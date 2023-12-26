@@ -1,18 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class InGameCharacterMover : MonoBehaviour
+using Mirror;
+public enum EPlayerType
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    Crew,
+    Imposter
+}
 
-    // Update is called once per frame
-    void Update()
+public class InGameCharacterMover : CharacterMover
+{
+    [SyncVar]
+    public EPlayerType playerType;
+
+    [ClientRpc]
+    public void RpcTeleport(Vector3 position)
     {
-        
+        transform.position = position;
     }
+ 
+    public override void Start()  //CharacterMover 클래스의 Start 함수를 덮어쓰도록 하기 위함
+    {
+        base.Start();
+        if (isOwned)
+        {
+            IsMoveable = true;
+
+            var myRoomPlayer = AmongUsRoomplayer.MyRoomPlayer;
+            CmdSetPlayerCharacter(myRoomPlayer.nickname, myRoomPlayer.playerColor);
+        }
+        GameSystem.instance.AddPlayer(this);
+    }
+    [Command]
+    private void CmdSetPlayerCharacter(string nickname ,EPlayerColor color)
+    {
+        this.nickname = nickname;
+        playercolor = color;
+    }
+  
 }
