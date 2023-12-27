@@ -6,14 +6,14 @@ public class GameRoomSettingUI : SettingUI
 {
     public void Open()
     {
-        Debug.Log("들어왔니?");
-        AmongUsRoomplayer.MyRoomPlayer.lobbyPlayerCharacter.IsMoveable = false;
+        
+        AmongUsRoomplayer.MyRoomPlayer.myCharacter.IsMoveable = false;
         gameObject.SetActive(true);
     }
     public override void Close()
     {
         base.Close();
-        AmongUsRoomplayer.MyRoomPlayer.lobbyPlayerCharacter.IsMoveable = true;
+        AmongUsRoomplayer.MyRoomPlayer.myCharacter.IsMoveable = true;
 
     }
     public void ExitGameRoom()

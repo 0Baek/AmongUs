@@ -42,7 +42,7 @@ public class AmongUsRoomplayer : NetworkRoomPlayer
 
     [SyncVar]
     public string nickname;
-    public CharacterMover lobbyPlayerCharacter;
+    public CharacterMover myCharacter;
 
 
     [Command]
@@ -52,7 +52,7 @@ public class AmongUsRoomplayer : NetworkRoomPlayer
         if (!IsNicknameDuplicate(nick))
         {
             nickname = nick;
-            lobbyPlayerCharacter.nickname = nick;
+            myCharacter.nickname = nick;
         }
         // 중복일 경우 처리 (예: 에러 메시지 전송 또는 다른 조치)
         else
@@ -137,7 +137,7 @@ public class AmongUsRoomplayer : NetworkRoomPlayer
     public void CmdSetPlayerColor(EPlayerColor color)
     {
         playerColor = color;
-        lobbyPlayerCharacter.playercolor = color;
+        myCharacter.playercolor = color;
     }
 
     private void SpawnLobbyPlayerCharacter()
