@@ -18,6 +18,13 @@ public class InGameCharacterMover : CharacterMover
     {
         transform.position = position;
     }
+    public void SetNicknameColor(EPlayerType type)
+    {
+        if (playerType ==EPlayerType.Imposter && type == EPlayerType.Imposter)
+        {
+            nicknameText.color = Color.red;
+        }
+    }
  
     public override void Start()  //CharacterMover 클래스의 Start 함수를 덮어쓰도록 하기 위함
     {

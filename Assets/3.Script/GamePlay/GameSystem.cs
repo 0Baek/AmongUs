@@ -61,6 +61,19 @@ public class GameSystem : NetworkBehaviour
     {
         yield return StartCoroutine(InGameUIManager.Instance.IngameintroUI.ShowIntroSequence());
 
+        InGameCharacterMover myCharacter = null;
+        foreach (var player in players)
+        {
+            if (player.isOwned)
+            {
+                myCharacter = player;
+                break;
+            }
+        }
+        foreach (var player in players)
+        {
+            player.SetNicknameColor(myCharacter.playerType);
+        }
         yield return new WaitForSeconds(3f);
         InGameUIManager.Instance.IngameintroUI.Close();
     }
