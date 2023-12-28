@@ -14,6 +14,11 @@ public class GameSystem : NetworkBehaviour
 
     [SerializeField]
     private float spawnDistance; //스폰 트랜스폼 사이의 거리
+
+    [SyncVar]
+    public float killCooldown;
+    [SyncVar]
+    public int killRange;
     public void AddPlayer(InGameCharacterMover player)
     {
         if (!players.Contains(player))
@@ -24,6 +29,10 @@ public class GameSystem : NetworkBehaviour
     private IEnumerator GameReady()
     {
         var manager = NetworkManager.singleton as RoomManager;
+
+        killCooldown = manager.gameRuleData.KillCooldown;
+        killRange = (int)manager.gameRuleData.killRange;
+
         while (manager.roomSlots.Count!=players.Count)
         {
             yield return null;
@@ -51,6 +60,11 @@ public class GameSystem : NetworkBehaviour
         //yield return StartCoroutine(InGameUIManager.Instance.IngameintroUI.ShowIntroSequence());
 
         RpcStartGame(); //호스트와 클라이언트 양쪽에서 실행 될 함수 
+
+        foreach (var player in players)
+        {
+            player.SetKillCooldown();
+        }
     }
     [ClientRpc]
     private void RpcStartGame()

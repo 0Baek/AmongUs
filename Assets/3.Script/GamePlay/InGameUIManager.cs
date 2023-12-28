@@ -16,6 +16,26 @@ public class InGameUIManager : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private Kill_BtnUI kill_BtnUI;
+    
+    public Kill_BtnUI Kill_BtnUI
+    {
+        get
+        {
+            return kill_BtnUI;
+        }
+    }
+    [SerializeField]
+    private KillUI killUI;
+    public KillUI KillUI
+    {
+        get
+        {
+            return killUI;
+        }
+    }
+
 
     private void Awake()
     {
