@@ -35,6 +35,33 @@ public class InGameUIManager : MonoBehaviour
             return killUI;
         }
     }
+    [SerializeField]
+    private ReportBtnUI reportBtnUI;
+    public ReportBtnUI ReportBtnUI
+    {
+        get
+        {
+            return reportBtnUI;
+        }
+    }
+    [SerializeField]
+    private ReportUI reportUI;
+    public ReportUI ReportUI
+    {
+        get
+        {
+            return reportUI;
+        }
+    }
+    [SerializeField]
+    private MeetingUI meetingUI;
+    public MeetingUI MeetingUI
+    {
+        get
+        {
+            return meetingUI;
+        }
+    }
 
 
     private void Awake()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 using Mirror;
 
 public class GameSystem : NetworkBehaviour
@@ -19,6 +20,14 @@ public class GameSystem : NetworkBehaviour
     public float killCooldown;
     [SyncVar]
     public int killRange;
+
+    [SerializeField]
+    private Light2D shadowLight;
+    [SerializeField]
+    private Light2D lightMapLight;
+    [SerializeField]
+    private Light2D globalLight;
+
     public void AddPlayer(InGameCharacterMover player)
     {
         if (!players.Contains(player))
@@ -107,5 +116,41 @@ public class GameSystem : NetworkBehaviour
             StartCoroutine(GameReady());
         }
         
+    }
+    public void ChangeLightMode(EPlayerType type)
+    {
+        if (type==EPlayerType.Ghost)
+        {
+            lightMapLight.lightType = Light2D.LightType.Global;
+            shadowLight.intensity = 0f;
+            globalLight.intensity = 1f;
+        }
+        else
+        {
+            lightMapLight.lightType = Light2D.LightType.Point;
+            shadowLight.intensity = 0.5f;
+            globalLight.intensity = 0.5f;
+        }
+    }
+    public void StartReportMeeting(EPlayerColor deadbodyColor)
+    {
+        RpcSendReportSign(deadbodyColor);
+    }
+    private IEnumerator StartMeeting_Coroutine()
+    {
+        yield return new WaitForSeconds(3f);
+        InGameUIManager.Instance.ReportUI.Close();
+        InGameUIManager.Instance.MeetingUI.Open();
+    }
+    [ClientRpc]
+    private void RpcSendReportSign(EPlayerColor deadbodyColor)
+    {
+        InGameUIManager.Instance.ReportUI.Open(deadbodyColor);
+        StartCoroutine(StartMeeting_Coroutine());
+    }
+    [ClientRpc]
+    public void RpcSignVoteEject(EPlayerColor voterColor,EPlayerColor ejectColor)
+    {
+        InGameUIManager.Instance.MeetingUI.UpdateVote(voterColor, ejectColor);
     }
 }

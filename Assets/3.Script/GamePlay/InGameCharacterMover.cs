@@ -50,8 +50,14 @@ public class InGameCharacterMover : CharacterMover
             return killCooldown < 0f&&playerFinder.targets.Count!=0;
         }
     }
+    public EPlayerColor foundDeadbodyColor; // 시체 색 발견 변수
 
-
+    [SyncVar]
+    public bool isReporter = false;
+    [SyncVar]
+    public bool isVote;
+    [SyncVar]
+    public int vote;
     [ClientRpc]
     public void RpcTeleport(Vector3 position)
     {
@@ -136,7 +142,7 @@ public class InGameCharacterMover : CharacterMover
     [ClientRpc]
     private void RpcDead(EPlayerColor imposterColor,EPlayerColor crewColor)
     {
-        if (hasAuthority) // 죽은 크루원이 자신 일 때만 킬ui 띄우기
+        if (isOwned) // 죽은 크루원이 자신 일 때만 킬ui 띄우기
         {
             animator.SetBool("isGhost", true);
             InGameUIManager.Instance.KillUI.Open(imposterColor,crewColor);
@@ -149,6 +155,7 @@ public class InGameCharacterMover : CharacterMover
                     player.SetVisibility(true);
                 }
             }
+            GameSystem.instance.ChangeLightMode(EPlayerType.Ghost);
         }
         else
         {
@@ -158,6 +165,21 @@ public class InGameCharacterMover : CharacterMover
                 SetVisibility(false);
             }
         }
+        var collider = GetComponent<BoxCollider2D>();
+        if (collider)
+        {
+            collider.enabled = false;
+        }
+    }
+    public void Report()
+    {
+        CmdReport(foundDeadbodyColor);
+    }
+    [Command]
+    public void CmdReport(EPlayerColor deadbodyColor)
+    {
+        isReporter = true;
+        GameSystem.instance.StartReportMeeting(deadbodyColor);
     }
     public void SetVisibility(bool isVisible)
     {
@@ -165,9 +187,10 @@ public class InGameCharacterMover : CharacterMover
         {
             var color = PlayerColor.GetColor(playercolor);
             color.a = 1f;
-            spriteRenderer.material.SetColor("_PlayerColor", color);
-            
+          
+            spriteRenderer.material.SetColor("_PlayerColor", color); 
             nicknameText.text = nickname;
+           
         }
         else
         {
@@ -177,9 +200,27 @@ public class InGameCharacterMover : CharacterMover
             spriteRenderer.material.SetColor("_MainTex", color);*/
             color.a = 0f;
             spriteRenderer.material.SetColor("_PlayerColor", color);
-
             nicknameText.text = "";
+           
         }
+    }
+
+    [Command]
+    public void CmdVoteEjectPlayer(EPlayerColor ejectColor)
+    {
+        isVote = true;
+        GameSystem.instance.RpcSignVoteEject(playercolor, ejectColor);
+
+        var players = FindObjectsOfType<InGameCharacterMover>();
+        InGameCharacterMover ejectedPlayer = null;
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (players[i].playercolor== ejectColor)
+            {
+                ejectedPlayer = players[i];
+            }
+        }
+        ejectedPlayer.vote += 1;
     }
 /*    private void SetTextureAlpha(SpriteRenderer spriteRenderer, string texturePropertyName, float alpha)
     {
