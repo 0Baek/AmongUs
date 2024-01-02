@@ -20,6 +20,8 @@ public class GameSystem : NetworkBehaviour
     public float killCooldown;
     [SyncVar]
     public int killRange;
+    [SyncVar]
+    public int skipVotePlayerCount;
 
     [SerializeField]
     private Light2D shadowLight;
@@ -152,5 +154,10 @@ public class GameSystem : NetworkBehaviour
     public void RpcSignVoteEject(EPlayerColor voterColor,EPlayerColor ejectColor)
     {
         InGameUIManager.Instance.MeetingUI.UpdateVote(voterColor, ejectColor);
+    }
+    [ClientRpc]
+    public void RpcSignSkipVote(EPlayerColor skipVotePlayerColor)
+    {
+        InGameUIManager.Instance.MeetingUI.UpdateSkipVotePlayer(skipVotePlayerColor);
     }
 }

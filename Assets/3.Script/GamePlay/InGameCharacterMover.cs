@@ -222,6 +222,13 @@ public class InGameCharacterMover : CharacterMover
         }
         ejectedPlayer.vote += 1;
     }
+    [Command]
+    public void CmdSkipVote()
+    {
+        isVote = true;
+        GameSystem.instance.skipVotePlayerCount += 1;
+        GameSystem.instance.RpcSignSkipVote(playercolor);
+    }
 /*    private void SetTextureAlpha(SpriteRenderer spriteRenderer, string texturePropertyName, float alpha)
     {
         Material material = spriteRenderer.material;

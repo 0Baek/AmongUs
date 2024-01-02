@@ -11,6 +11,18 @@ public class MeetingUI : MonoBehaviour
     [SerializeField]
     private Transform playerPanelsParent;
 
+    [SerializeField]
+    private GameObject voterPrefab;
+
+    [SerializeField]
+    private GameObject skipvoteBtn;
+
+    [SerializeField]
+    private GameObject skipVoteplayers;
+
+    [SerializeField]
+    private Transform skipvoteParentTransform;
+
     private List<MeetingPlayerPanel> meetingPlayerPanels = new List<MeetingPlayerPanel>();
 
     public void Open()
@@ -55,4 +67,33 @@ public class MeetingUI : MonoBehaviour
             }
         }
     }
+    public void UpdateSkipVotePlayer(EPlayerColor skipVoterPlayerColor)
+    {
+        foreach(var panel in meetingPlayerPanels)
+        {
+            if (panel.targetPlayer.playercolor ==skipVoterPlayerColor)
+            {
+                panel.UpdateVoteSign(true);
+            }
+        }
+        var voter = Instantiate(voterPrefab, skipvoteParentTransform).GetComponent<Image>();
+        voter.material = Instantiate(voter.material);
+        voter.material.SetColor("_PlayerColor", PlayerColor.GetColor(skipVoterPlayerColor));
+        skipvoteBtn.SetActive(false);
+        skipVoteplayers.SetActive(true);
+        
+    }
+    public void OnClickSkipVoteBtn()
+    {
+        var myCharacter = AmongUsRoomplayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
+        if (myCharacter.isVote)
+        {
+            return;
+        }
+
+        myCharacter.CmdSkipVote();
+    }
+    
+
+    
 }
