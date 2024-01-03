@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
+
+public enum EMeetimgState
+{
+    None,
+    Meeting,
+    Vote
+}
 
 public class MeetingUI : MonoBehaviour
 {
@@ -23,8 +31,23 @@ public class MeetingUI : MonoBehaviour
     [SerializeField]
     private Transform skipvoteParentTransform;
 
-    private List<MeetingPlayerPanel> meetingPlayerPanels = new List<MeetingPlayerPanel>();
+    [SerializeField]
+    private GameObject ChatBtn;
+    [SerializeField]
+    public GameObject chatPanel; // 추가된 부분
+    [SerializeField]
+    public Text chatText; // 추가된 부분
+    [SerializeField]
+    private InputField chatInputField; // 추가된 부분
 
+    [SerializeField]
+    private Text meetingTimeText;
+
+    private EMeetimgState meetimgState;
+
+    private List<MeetingPlayerPanel> meetingPlayerPanels = new List<MeetingPlayerPanel>();
+   
+ 
     public void Open()
     {
         var myCharacter = AmongUsRoomplayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
@@ -44,6 +67,10 @@ public class MeetingUI : MonoBehaviour
                 meetingPlayerPanels.Add(panel);
             }
         }
+    }
+    public void ChangeMeetingState(EMeetimgState state)
+    {
+        meetimgState = state;
     }
     public void SelectPlayerPanel()
     {
@@ -80,7 +107,7 @@ public class MeetingUI : MonoBehaviour
         voter.material = Instantiate(voter.material);
         voter.material.SetColor("_PlayerColor", PlayerColor.GetColor(skipVoterPlayerColor));
         skipvoteBtn.SetActive(false);
-        skipVoteplayers.SetActive(true);
+
         
     }
     public void OnClickSkipVoteBtn()
@@ -92,8 +119,44 @@ public class MeetingUI : MonoBehaviour
         }
 
         myCharacter.CmdSkipVote();
+        SelectPlayerPanel();
     }
-    
+    public void OnClickChatBtn()
+    {
+        ChatBtn.SetActive(true);
+    }
+    public void CompleteVote()
+    {
+        foreach(var panel in meetingPlayerPanels)
+        {
+            panel.OpenResult();
+        }
+        skipVoteplayers.SetActive(true);
+        skipvoteBtn.SetActive(false);
+    }
+    public void Close()
+    {
+        foreach (var panel in meetingPlayerPanels)
+        {
+            Destroy(panel.gameObject);
+        }
 
-    
+        meetingPlayerPanels.Clear();
+
+        gameObject.SetActive(false);
+    }
+    private void Update()
+    {
+        if (meetimgState ==EMeetimgState.Meeting)
+        {
+            meetingTimeText.text = string.Format("회의시간 : {0}s", (int)Mathf.Clamp(GameSystem.instance.remainTime, 0f, float.MaxValue));
+        }
+        else if (meetimgState == EMeetimgState.Vote)
+        {
+            meetingTimeText.text = string.Format("투표시간 : {0}s", (int)Mathf.Clamp(GameSystem.instance.remainTime, 0f, float.MaxValue));
+        }
+    }
+
+
+
 }

@@ -248,6 +248,10 @@ MonoBehaviour:
   nicknameText: {fileID: 3015091406318556906}
   playerType: 0
   playerFinder: {fileID: 6229447732575752825}
+  foundDeadbodyColor: 0
+  isReporter: 0
+  isVote: 0
+  vote: 0
 --- !u!1 &3015091406318556916
 GameObject:
   m_ObjectHideFlags: 0

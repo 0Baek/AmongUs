@@ -123,30 +123,37 @@ public class InGameCharacterMover : CharacterMover
         if (target !=null)
         {
             RpcTeleport(target.transform.position);
-            target.Dead(playercolor);
+            target.Dead(false,playercolor);
             killCooldown = GameSystem.instance.killCooldown;
         }
       
 
     }
-    public void Dead(EPlayerColor imposterColor)
+    public void Dead(bool isEject,EPlayerColor imposterColor=EPlayerColor.Black)
     {
         playerType |= EPlayerType.Ghost;
-        RpcDead(imposterColor, playercolor);
-        var manager = NetworkRoomManager.singleton as RoomManager;
-        var deadbody = Instantiate(manager.spawnPrefabs[1], transform.position,transform.rotation).GetComponent<Deadbody>();
-        NetworkServer.Spawn(deadbody.gameObject);
-        deadbody.RpcSetColor(playercolor);
+        RpcDead(isEject, imposterColor, playercolor);
+        if (!isEject) // 추방으로 죽은게 아닐때만
+        {
+            var manager = NetworkRoomManager.singleton as RoomManager;
+            var deadbody = Instantiate(manager.spawnPrefabs[1], transform.position, transform.rotation).GetComponent<Deadbody>();
+            NetworkServer.Spawn(deadbody.gameObject);
+            deadbody.RpcSetColor(playercolor);
+        }
+        
     }
 
     [ClientRpc]
-    private void RpcDead(EPlayerColor imposterColor,EPlayerColor crewColor)
+    private void RpcDead(bool isEject,EPlayerColor imposterColor,EPlayerColor crewColor)
     {
         if (isOwned) // 죽은 크루원이 자신 일 때만 킬ui 띄우기
         {
             animator.SetBool("isGhost", true);
-            InGameUIManager.Instance.KillUI.Open(imposterColor,crewColor);
-
+            if (!isEject) // 킬ui가 추방으로 죽은게 아닐 때만
+            {
+                InGameUIManager.Instance.KillUI.Open(imposterColor, crewColor);
+            }
+          
             var players = GameSystem.instance.GetPlayerList();
             foreach (var player in players)
             {

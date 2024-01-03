@@ -62,6 +62,15 @@ public class InGameUIManager : MonoBehaviour
             return meetingUI;
         }
     }
+    [SerializeField]
+    private EjectionUI ejectionUI;
+    public EjectionUI EjectionUI
+    {
+        get
+        {
+            return ejectionUI;
+        }
+    }
 
 
     private void Awake()

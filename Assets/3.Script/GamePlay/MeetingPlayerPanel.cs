@@ -36,6 +36,10 @@ public class MeetingPlayerPanel : MonoBehaviour
         var voter = Instantiate(voterPrefab, voterParentTransform).GetComponent<Image>();
         voter.material = Instantiate(voter.material);
         voter.material.SetColor("_PlayerColor", PlayerColor.GetColor(voterColor));
+       
+    }
+    public void OpenResult()
+    {
         voterParentTransform.gameObject.SetActive(true);
     }
     public void UpdateVoteSign(bool isVoted)
