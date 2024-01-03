@@ -32,13 +32,11 @@ public class MeetingUI : MonoBehaviour
     private Transform skipvoteParentTransform;
 
     [SerializeField]
-    private GameObject ChatBtn;
+    public GameObject chatPanel;
     [SerializeField]
-    public GameObject chatPanel; // 추가된 부분
+    public Text chatText; 
     [SerializeField]
-    public Text chatText; // 추가된 부분
-    [SerializeField]
-    private InputField chatInputField; // 추가된 부분
+    private InputField chatInputField; 
 
     [SerializeField]
     private Text meetingTimeText;
@@ -46,8 +44,19 @@ public class MeetingUI : MonoBehaviour
     private EMeetimgState meetimgState;
 
     private List<MeetingPlayerPanel> meetingPlayerPanels = new List<MeetingPlayerPanel>();
-   
- 
+    public void OnEndEdit()
+    {
+        if (!string.IsNullOrEmpty(chatInputField.text))
+        {
+            var myCharacter = AmongUsRoomplayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
+            string message = $"{myCharacter.nickname}: {chatInputField.text}\n";
+            myCharacter.CmdSendChatMessage(message);
+            chatInputField.text = "";
+            chatInputField.DeactivateInputField();
+        }
+        //chatPanel.SetActive(false);
+    }
+
     public void Open()
     {
         var myCharacter = AmongUsRoomplayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
@@ -123,7 +132,7 @@ public class MeetingUI : MonoBehaviour
     }
     public void OnClickChatBtn()
     {
-        ChatBtn.SetActive(true);
+        chatPanel.SetActive(!chatPanel.activeSelf);
     }
     public void CompleteVote()
     {

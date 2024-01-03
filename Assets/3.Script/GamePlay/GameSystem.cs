@@ -304,5 +304,11 @@ public class GameSystem : NetworkBehaviour
     {
         InGameUIManager.Instance.MeetingUI.UpdateSkipVotePlayer(skipVotePlayerColor);
     }
-  
+    [ClientRpc]
+    public void RpcReceiveChatMessage(string message)
+    {
+        InGameUIManager.Instance.MeetingUI.chatText.text += message;
+
+    }
+
 }

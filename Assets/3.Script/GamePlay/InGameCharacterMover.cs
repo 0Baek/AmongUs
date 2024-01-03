@@ -236,37 +236,43 @@ public class InGameCharacterMover : CharacterMover
         GameSystem.instance.skipVotePlayerCount += 1;
         GameSystem.instance.RpcSignSkipVote(playercolor);
     }
-/*    private void SetTextureAlpha(SpriteRenderer spriteRenderer, string texturePropertyName, float alpha)
+    [Command]
+   public void CmdSendChatMessage(string message)
     {
-        Material material = spriteRenderer.material;
+        GameSystem.instance.RpcReceiveChatMessage(message);
+    }
 
-        // Clone the material to avoid modifying the shared material
-        material = new Material(material);
-
-        // Get the main texture from the material
-        Texture2D mainTexture = (Texture2D)material.GetTexture(texturePropertyName);
-
-        // Clone the texture to avoid modifying the shared texture
-        mainTexture = Instantiate(mainTexture);
-
-        // Get the color array from the texture
-        Color[] colors = mainTexture.GetPixels();
-
-        // Modify the alpha value for each pixel
-        for (int i = 0; i < colors.Length; i++)
+    /*    private void SetTextureAlpha(SpriteRenderer spriteRenderer, string texturePropertyName, float alpha)
         {
-            colors[i].a = alpha;
-        }
+            Material material = spriteRenderer.material;
 
-        // Apply the modified color array to the texture
-        mainTexture.SetPixels(colors);
+            // Clone the material to avoid modifying the shared material
+            material = new Material(material);
 
-        // Apply changes and set the modified texture to the material
-        mainTexture.Apply();
-        material.SetTexture(texturePropertyName, mainTexture);
+            // Get the main texture from the material
+            Texture2D mainTexture = (Texture2D)material.GetTexture(texturePropertyName);
 
-        // Set the material back to the sprite renderer
-        spriteRenderer.material = material;
-    }*/
+            // Clone the texture to avoid modifying the shared texture
+            mainTexture = Instantiate(mainTexture);
+
+            // Get the color array from the texture
+            Color[] colors = mainTexture.GetPixels();
+
+            // Modify the alpha value for each pixel
+            for (int i = 0; i < colors.Length; i++)
+            {
+                colors[i].a = alpha;
+            }
+
+            // Apply the modified color array to the texture
+            mainTexture.SetPixels(colors);
+
+            // Apply changes and set the modified texture to the material
+            mainTexture.Apply();
+            material.SetTexture(texturePropertyName, mainTexture);
+
+            // Set the material back to the sprite renderer
+            spriteRenderer.material = material;
+        }*/
 
 }
