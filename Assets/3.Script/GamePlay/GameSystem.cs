@@ -10,6 +10,11 @@ public class GameSystem : NetworkBehaviour
 
     private List<InGameCharacterMover> players = new List<InGameCharacterMover>();
 
+    private Queue<string> chatMessages = new Queue<string>();
+
+    [SyncVar]
+    public int maxMessageCount = 15;
+
     [SerializeField]
     private Transform spawnTransform;
 
@@ -307,7 +312,15 @@ public class GameSystem : NetworkBehaviour
     [ClientRpc]
     public void RpcReceiveChatMessage(string message)
     {
-        InGameUIManager.Instance.MeetingUI.chatText.text += message;
+        chatMessages.Enqueue(message);
+
+        while (chatMessages.Count > maxMessageCount)
+        {
+
+            chatMessages.Dequeue();
+        }
+        InGameUIManager.Instance.MeetingUI.chatText.text = string.Join("", chatMessages.ToArray());
+        InGameUIManager.Instance.MeetingUI.ChatSign.SetActive(true);
 
     }
 

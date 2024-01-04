@@ -112,8 +112,10 @@ public class AmongUsRoomplayer : NetworkRoomPlayer
         }
         if (isLocalPlayer)
         {
+            AudioManager.instance.PlaySFX("PlayerOn");
             CmdSetNickname(PlayerSettings.nickname);
         }
+        
         LobbyUIManager.instance.GameRoomPlayerCount.UpdatePlayerCount();
     }
     private void OnDestroy()
@@ -138,6 +140,7 @@ public class AmongUsRoomplayer : NetworkRoomPlayer
     {
         playerColor = color;
         myCharacter.playercolor = color;
+       
     }
 
     private void SpawnLobbyPlayerCharacter()
@@ -182,6 +185,7 @@ public class AmongUsRoomplayer : NetworkRoomPlayer
         NetworkServer.Spawn(playerCharacter.gameObject, connectionToClient);
         playerCharacter.ownerNetld = netId;
         playerCharacter.playercolor = color;
+       
 
         /*
          

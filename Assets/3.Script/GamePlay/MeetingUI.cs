@@ -20,7 +20,7 @@ public class MeetingUI : MonoBehaviour
     private Transform playerPanelsParent;
 
     [SerializeField]
-    private GameObject voterPrefab;
+    public GameObject voterPrefab;
 
     [SerializeField]
     private GameObject skipvoteBtn;
@@ -36,10 +36,15 @@ public class MeetingUI : MonoBehaviour
     [SerializeField]
     public Text chatText; 
     [SerializeField]
-    private InputField chatInputField; 
+    private InputField chatInputField;
+    [SerializeField]
+    public GameObject ChatSign;
 
     [SerializeField]
     private Text meetingTimeText;
+
+  
+  
 
     private EMeetimgState meetimgState;
 
@@ -49,12 +54,19 @@ public class MeetingUI : MonoBehaviour
         if (!string.IsNullOrEmpty(chatInputField.text))
         {
             var myCharacter = AmongUsRoomplayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
-            string message = $"{myCharacter.nickname}: {chatInputField.text}\n";
-            myCharacter.CmdSendChatMessage(message);
+
+            if ((myCharacter.playerType & EPlayerType.Ghost) != EPlayerType.Ghost)
+            {
+                string coloredNickname = $"<color=#000000>{myCharacter.nickname}</color>";
+                string message = $" {coloredNickname} : {chatInputField.text}\n";
+
+                myCharacter.CmdSendChatMessage(message);
+            }
             chatInputField.text = "";
-            chatInputField.DeactivateInputField();
+           // chatInputField.DeactivateInputField();
         }
-        //chatPanel.SetActive(false);
+       
+     
     }
 
     public void Open()
@@ -129,10 +141,12 @@ public class MeetingUI : MonoBehaviour
 
         myCharacter.CmdSkipVote();
         SelectPlayerPanel();
+        AudioManager.instance.PlaySFX("Vote");
     }
     public void OnClickChatBtn()
     {
         chatPanel.SetActive(!chatPanel.activeSelf);
+        ChatSign.SetActive(false);
     }
     public void CompleteVote()
     {

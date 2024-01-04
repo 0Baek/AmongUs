@@ -19,7 +19,7 @@ public class ReportUI : MonoBehaviour
         deadbodyImg.material = inst;
 
         gameObject.SetActive(true);
-
+        AudioManager.instance.PlaySFX("Report");
         deadbodyImg.material.SetColor("_PlayerColor", PlayerColor.GetColor(deadbodyColor));
     }
     public void Close()

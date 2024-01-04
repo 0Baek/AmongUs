@@ -20,6 +20,8 @@ public enum EPlayerType
 
 public class InGameCharacterMover : CharacterMover
 {
+    
+
     [SyncVar(hook =nameof(SetPlayerType_Hook))]
     public EPlayerType playerType;
 
@@ -139,8 +141,11 @@ public class InGameCharacterMover : CharacterMover
             var deadbody = Instantiate(manager.spawnPrefabs[1], transform.position, transform.rotation).GetComponent<Deadbody>();
             NetworkServer.Spawn(deadbody.gameObject);
             deadbody.RpcSetColor(playercolor);
+            AudioManager.instance.PlaySFX("Kill");
         }
-        
+  
+
+
     }
 
     [ClientRpc]
@@ -187,15 +192,18 @@ public class InGameCharacterMover : CharacterMover
     {
         isReporter = true;
         GameSystem.instance.StartReportMeeting(deadbodyColor);
+       
     }
     public void SetVisibility(bool isVisible)
     {
         if (isVisible)
         {
+            
             var color = PlayerColor.GetColor(playercolor);
             color.a = 1f;
           
             spriteRenderer.material.SetColor("_PlayerColor", color); 
+           
             nicknameText.text = nickname;
            
         }
@@ -207,6 +215,7 @@ public class InGameCharacterMover : CharacterMover
             spriteRenderer.material.SetColor("_MainTex", color);*/
             color.a = 0f;
             spriteRenderer.material.SetColor("_PlayerColor", color);
+            spriteRenderer.material.SetTexture("_MainTex", null);
             nicknameText.text = "";
            
         }
@@ -239,6 +248,7 @@ public class InGameCharacterMover : CharacterMover
     [Command]
    public void CmdSendChatMessage(string message)
     {
+        InGameUIManager.Instance.MeetingUI.ChatSign.SetActive(true);
         GameSystem.instance.RpcReceiveChatMessage(message);
     }
 

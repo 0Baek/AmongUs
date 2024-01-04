@@ -63,6 +63,8 @@ public class EjectionUI : MonoBehaviour
                 yield return null;
                 timer += Time.deltaTime + 0.5f;
 
+                AudioManager.instance.PlaySFX("Eject");
+
                 ejectionPlayer.rectTransform.anchoredPosition = Vector2.Lerp(left.anchoredPosition, right.anchoredPosition, timer);
                 ejectionPlayer.rectTransform.rotation = Quaternion.Euler(ejectionPlayer.rectTransform.rotation.eulerAngles +
                     new Vector3(0f, 0f, -360f * Time.deltaTime));
@@ -74,8 +76,12 @@ public class EjectionUI : MonoBehaviour
             forwardText += backText[0];
             backText = backText.Remove(0, 1);
             ejectionResultText.text = string.Format("<color=#FFFFFF>{0}</color><color=#000000>{1}</color>", forwardText, backText);
-            yield return new WaitForSeconds(0.1f);
+
+            AudioManager.instance.PlaySFX("Eject");
+
+            yield return new WaitForSeconds(0.05f);
         }
+       
     }
     public void Close()
     {

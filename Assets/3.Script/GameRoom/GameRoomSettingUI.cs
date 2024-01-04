@@ -28,5 +28,7 @@ public class GameRoomSettingUI : SettingUI
         {
             manager.StopClient();
         }
+        AudioManager.instance.PlaySFX("PlayerOut");
     }
+    
 }

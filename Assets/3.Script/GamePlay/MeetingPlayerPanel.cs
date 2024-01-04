@@ -87,6 +87,7 @@ public class MeetingPlayerPanel : MonoBehaviour
 
         var myCharacter = AmongUsRoomplayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
         myCharacter.CmdVoteEjectPlayer(targetPlayer.playercolor);
+        AudioManager.instance.PlaySFX("Vote");
         Unselect();
     }
     public void Unselect()

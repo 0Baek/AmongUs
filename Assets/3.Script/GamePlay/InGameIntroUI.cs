@@ -34,7 +34,9 @@ public class InGameIntroUI : MonoBehaviour
 
     public IEnumerator ShowIntroSequence()
     {
+       
         shhhhhhObj.SetActive(true);
+        AudioManager.instance.PlaySFX("Start");
         yield return new WaitForSeconds(3f);
         shhhhhhObj.SetActive(false);
 
