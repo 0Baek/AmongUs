@@ -14,6 +14,7 @@ public class Kill_BtnUI : MonoBehaviour
     private InGameCharacterMover targetplayer;
    public void Show(InGameCharacterMover player)
     {
+       
         gameObject.SetActive(true);
         targetplayer = player;
     }
@@ -35,6 +36,7 @@ public class Kill_BtnUI : MonoBehaviour
     }
     public void OnClickKillBtn()
     {
+       
         targetplayer.Kill();
     }
 

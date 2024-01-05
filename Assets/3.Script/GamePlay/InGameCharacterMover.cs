@@ -7,22 +7,21 @@ using Mirror;
 // x0 :   0 = 살아있음 1 = 죽음 
 // 00 = 살아있는 크루원 01 = 살아있는 임포스터 
 // 10 - 죽은 크루원    11 = 죽은 임포스터 
+
 public enum EPlayerType
 {
-    Crew=0,
-    Imposter=1,
-    Ghost=2,
-    Crew_Alive=0,
-    Imposter_Alive=1,
-    Crew_Ghost=2,
-    Imposter_Ghost=3,
+    Crew = 0,
+    Imposter = 1,
+    Ghost = 2,
+    Crew_Alive = 0,
+    Imposter_Alive = 1,
+    Crew_Ghost = 2,
+    Imposter_Ghost = 3,
 }
 
 public class InGameCharacterMover : CharacterMover
 {
-    
-
-    [SyncVar(hook =nameof(SetPlayerType_Hook))]
+    [SyncVar(hook = nameof(SetPlayerType_Hook))]
     public EPlayerType playerType;
 
     private void SetPlayerType_Hook(EPlayerType _, EPlayerType type)
@@ -215,7 +214,7 @@ public class InGameCharacterMover : CharacterMover
             spriteRenderer.material.SetColor("_MainTex", color);*/
             color.a = 0f;
             spriteRenderer.material.SetColor("_PlayerColor", color);
-            spriteRenderer.material.SetTexture("_MainTex", null);
+          
             nicknameText.text = "";
            
         }
@@ -249,6 +248,7 @@ public class InGameCharacterMover : CharacterMover
    public void CmdSendChatMessage(string message)
     {
         InGameUIManager.Instance.MeetingUI.ChatSign.SetActive(true);
+        AudioManager.instance.PlaySFX("Chat");
         GameSystem.instance.RpcReceiveChatMessage(message);
     }
 

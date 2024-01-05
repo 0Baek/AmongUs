@@ -8,6 +8,8 @@ public class CharacterMover : NetworkBehaviour
 {
     protected Animator animator; // 상속 스크립트 사용가능
 
+    public AudioSource audioSource;
+
     private bool isMoveable;
     public bool IsMoveable
     {
@@ -20,11 +22,13 @@ public class CharacterMover : NetworkBehaviour
             if (!value) //받아온 벨류값이 false일 때 애니메이션도 false 움직임 제어
             {
                 animator.SetBool("isMove", false);
+               
             }
             isMoveable = value;
         }
     }
-    
+
+
     [SyncVar]
     public float speed = 2f;
 
@@ -97,6 +101,7 @@ public class CharacterMover : NetworkBehaviour
                 transform.position += dir * speed * Time.deltaTime;
                 isMove = dir.magnitude != 0f;
 
+
             }
             else
             {
@@ -117,9 +122,33 @@ public class CharacterMover : NetworkBehaviour
                 }
                 
             }
+         
+          
+
+
             animator.SetBool("isMove", isMove);
+            if (isMove)
+            {
+                if (!audioSource.isPlaying)
+                {
+                    var myCharacter = AmongUsRoomplayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
+                    if ((myCharacter.playerType & EPlayerType.Ghost) != EPlayerType.Ghost)
+                    {
+                        audioSource.Play();
+
+                    }
+                }
+            }
+            else
+            {
+                audioSource.Stop();
+            }
+
+
+
 
         }
+
         if (transform.localScale.x<0)
         {
             nicknameText.transform.localScale = new Vector3(-1f, 1f, 1f);
@@ -128,6 +157,8 @@ public class CharacterMover : NetworkBehaviour
         {
             nicknameText.transform.localScale = new Vector3(1f, 1f, 1f);
         }
+
+       
     }
 
 

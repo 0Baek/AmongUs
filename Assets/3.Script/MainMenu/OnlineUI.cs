@@ -12,8 +12,10 @@ public class OnlineUI : MonoBehaviour
 
     public void onClickCreateRoomButton()
     {
+      
         if (nicknameInputField.text !="")
         {
+            AudioManager.instance.PlaySFX("Next");
             PlayerSettings.nickname = nicknameInputField.text;
             creatRoomUI.SetActive(true);
             gameObject.SetActive(false);
@@ -21,12 +23,15 @@ public class OnlineUI : MonoBehaviour
         else
         {
             nicknameInputField.GetComponent<Animator>().SetTrigger("on");
+            AudioManager.instance.PlaySFX("Btn");
         }
     }
     public void OnClickEnterGameRoomBtn()
     {
+       
         if (nicknameInputField.text!="")
         {
+            AudioManager.instance.PlaySFX("Next");
             PlayerSettings.nickname = nicknameInputField.text;
             var manager = RoomManager.singleton;
             manager.StartClient();
@@ -35,6 +40,7 @@ public class OnlineUI : MonoBehaviour
         else
         {
             nicknameInputField.GetComponent<Animator>().SetTrigger("on");
+            AudioManager.instance.PlaySFX("Btn");
         }
       
     }

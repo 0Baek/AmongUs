@@ -241,14 +241,13 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
+  audioSource: {fileID: 3555793840140633061}
   speed: 1
   characterSize: 0.36
   cameraSize: 1.48
   playercolor: 0
   nickname: 
   nicknameText: {fileID: 3015091406318556906}
-  audioSource: {fileID: 3555793840140633061}
-  audioClip: {fileID: 0}
   playerType: 0
   playerFinder: {fileID: 6229447732575752825}
   foundDeadbodyColor: 0
@@ -265,7 +264,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: cba2628fcf95bc44b9c09e1624f0f072, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 65e4d1c4e835e5b499afbda6cd42a05f, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

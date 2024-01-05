@@ -32,6 +32,7 @@ public class SettingUI : MonoBehaviour
     }
     public  void SetControlMode(int controlType)
     {
+        AudioManager.instance.PlaySFX("Next");
         PlayerSettings.countrolType = (ECountrolType)controlType;
 
         switch (PlayerSettings.countrolType)
@@ -47,8 +48,14 @@ public class SettingUI : MonoBehaviour
 
         }
     }
+    public void Open()
+    {
+        AudioManager.instance.PlaySFX("Next");
+        gameObject.SetActive(true);
+    }
     public virtual void Close()
     {
+        AudioManager.instance.PlaySFX("Next");
         StartCoroutine(CloseAfterDelay());
     }
     private IEnumerator CloseAfterDelay()

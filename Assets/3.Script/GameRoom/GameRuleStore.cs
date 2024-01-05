@@ -44,6 +44,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnRuleToggle(bool value)
     {
+        AudioManager.instance.PlaySFX("Next");
         isRule = value;
         if (isRule)
         {
@@ -61,6 +62,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnConfirmEjectsToggle(bool value)
     {
+        AudioManager.instance.PlaySFX("Next");
         isRule = false;
         isRuleToggle.isOn = false;
         confirmEjects = value;
@@ -77,6 +79,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeEmergencyMeetings(bool isPlus)
     {
+        AudioManager.instance.PlaySFX("Next");
         emergencyMeetings = Mathf.Clamp(emergencyMeetings + (isPlus ? 1 : -1), 0, 9);
         isRule = false;
         isRuleToggle.isOn = false;
@@ -93,6 +96,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeEmergencyMeetingsCooldown(bool isPlus)
     {
+        AudioManager.instance.PlaySFX("Next");
         emergencyMeetingsCooldown = Mathf.Clamp(emergencyMeetingsCooldown + (isPlus ? 5 : -5), 0, 60);
         isRule = false;
         isRuleToggle.isOn = false;
@@ -109,6 +113,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeMeetingsTime(bool isPlus)
     {
+        AudioManager.instance.PlaySFX("Next");
         meetingsTime = Mathf.Clamp(meetingsTime + (isPlus ? 5 : -5), 0, 120);
         isRule = false;
         isRuleToggle.isOn = false;
@@ -126,6 +131,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeVoteTime(bool isPlus)
     {
+        AudioManager.instance.PlaySFX("Next");
         voteTime = Mathf.Clamp(voteTime + (isPlus ? 5 : -5), 0, 300);
         isRule = false;
         isRuleToggle.isOn = false;
@@ -141,6 +147,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnAnonymouseVotesToggle(bool value)
     {
+        AudioManager.instance.PlaySFX("Next");
         isRule = false;
         isRuleToggle.isOn = false;
         anonymousVotes = value;
@@ -157,6 +164,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeMoveSpeed(bool isPlus)
     {
+        AudioManager.instance.PlaySFX("Next");
         moveSpeed = Mathf.Clamp(moveSpeed + (isPlus ? 0.25f : -0.25f), 0.5f, 3f);
         isRule = false;
         isRuleToggle.isOn = false;
@@ -173,6 +181,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeCrewSight(bool isPlus)
     {
+        AudioManager.instance.PlaySFX("Next");
         crewSight = Mathf.Clamp(crewSight + (isPlus ? 0.25f : -0.25f), 0.25f, 5f);
         isRule = false;
         isRuleToggle.isOn = false;
@@ -189,6 +198,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeImposterSight(bool isPlus)
     {
+        AudioManager.instance.PlaySFX("Next");
         imposterSight = Mathf.Clamp(imposterSight + (isPlus ? 0.25f : -0.25f), 0.25f, 5f);
         isRule = false;
         isRuleToggle.isOn = false;
@@ -205,6 +215,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeKillCooldown(bool isPlus)
     {
+        AudioManager.instance.PlaySFX("Next");
         KillCooldown = Mathf.Clamp(KillCooldown + (isPlus ? 2.5f : -2.5f), 10f, 60f);
         isRule = false;
         isRuleToggle.isOn = false;
@@ -223,6 +234,7 @@ public class GameRuleStore : NetworkBehaviour
     //열거형 캐스팅 방식
     public void OnChangeKillRange(bool isPlus)
     {
+        AudioManager.instance.PlaySFX("Next");
         killRange = (EKillRange)Mathf.Clamp((int)killRange + (isPlus ? 1 : -1), 0f, 2);
         isRule = false;
         isRuleToggle.isOn = false;
@@ -238,6 +250,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnVisualTasksToggle(bool value)
     {
+        AudioManager.instance.PlaySFX("Next");
         isRule = false;
         isRuleToggle.isOn = false;
         visualTaske = value;
@@ -255,6 +268,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeTaskBarUpdates(bool isPlus)
     {
+        AudioManager.instance.PlaySFX("Next");
         taskBarUpdates = (ETaskBarUpdates)Mathf.Clamp((int)taskBarUpdates + (isPlus ? 1 : -1), 0f, 2);
         isRule = false;
         isRuleToggle.isOn = false;
@@ -271,6 +285,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeCommonTask(bool isPlus)
     {
+        AudioManager.instance.PlaySFX("Next");
         commonTask = Mathf.Clamp(commonTask + (isPlus ? 1 : -1), 0, 2);
         isRule = false;
         isRuleToggle.isOn = false;
@@ -288,6 +303,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeComplexTask(bool isPlus)
     {
+        AudioManager.instance.PlaySFX("Next");
         complexTask = Mathf.Clamp(complexTask + (isPlus ? 1 : -1), 0, 3);
         isRule = false;
         isRuleToggle.isOn = false;
@@ -304,6 +320,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeSimpleTask(bool isPlus)
     {
+        AudioManager.instance.PlaySFX("Next");
         simpleTask = Mathf.Clamp(simpleTask + (isPlus ? 1 : -1), 0, 5);
         isRule = false;
         isRuleToggle.isOn = false;

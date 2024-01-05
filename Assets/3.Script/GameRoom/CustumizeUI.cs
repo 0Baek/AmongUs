@@ -26,6 +26,7 @@ public class CustumizeUI : MonoBehaviour
     }
     public void ActiveColorPanel()
     {
+        AudioManager.instance.PlaySFX("Next");
         colorBtn.image.color = new Color(0f, 0f, 0f, 0.75f);
         gameRuleBtn.image.color= new Color(0f, 0f, 0f, 0.25f);
 
@@ -34,6 +35,7 @@ public class CustumizeUI : MonoBehaviour
     }
     public void ActiveGameRulePanel()
     {
+        AudioManager.instance.PlaySFX("Next");
         colorBtn.image.color = new Color(0f, 0f, 0f, 0.25f);
         gameRuleBtn.image.color = new Color(0f, 0f, 0f, 0.75f);
 
@@ -62,6 +64,7 @@ public class CustumizeUI : MonoBehaviour
 
     public void UpdateColorBtn()
     {
+        AudioManager.instance.PlaySFX("Next");
         var roomSlots = (NetworkManager.singleton as RoomManager).roomSlots;
         for (int i = 0; i < colorSelects.Count; i++)
         {
@@ -91,17 +94,20 @@ public class CustumizeUI : MonoBehaviour
         {
             AmongUsRoomplayer.MyRoomPlayer.CmdSetPlayerColor ((EPlayerColor)index);
             UpdatePreviewColor((EPlayerColor)index);
+            AudioManager.instance.PlaySFX("Next");
         }
     }
     public void Open()
     {
-      // lobbyCharacter = FindObjectOfType<LobbyCharacterMover>();
+        AudioManager.instance.PlaySFX("Next");
+        // lobbyCharacter = FindObjectOfType<LobbyCharacterMover>();
         AmongUsRoomplayer.MyRoomPlayer.myCharacter.IsMoveable = false;
        // lobbyCharacter.isMoveable = false;
         gameObject.SetActive(true);
     }
     public void Close()
     {
+        AudioManager.instance.PlaySFX("Next");
         //lobbyCharacter.isMoveable = true;
         AmongUsRoomplayer.MyRoomPlayer.myCharacter.IsMoveable = true;
         gameObject.SetActive(false);

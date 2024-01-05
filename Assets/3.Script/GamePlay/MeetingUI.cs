@@ -32,6 +32,8 @@ public class MeetingUI : MonoBehaviour
     private Transform skipvoteParentTransform;
 
     [SerializeField]
+    public Image characterImg;
+    [SerializeField]
     public GameObject chatPanel;
     [SerializeField]
     public Text chatText; 
@@ -54,13 +56,22 @@ public class MeetingUI : MonoBehaviour
         if (!string.IsNullOrEmpty(chatInputField.text))
         {
             var myCharacter = AmongUsRoomplayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
-
+        
             if ((myCharacter.playerType & EPlayerType.Ghost) != EPlayerType.Ghost)
             {
-                string coloredNickname = $"<color=#000000>{myCharacter.nickname}</color>";
+                // 플레이어의 색상을 가져와서 텍스트에 적용
+                /*  Color playerColor = PlayerColor.GetColor(myCharacter.playercolor);
+                  string coloredNickname = $"<color=#{ColorUtility.ToHtmlStringRGB(playerColor)}>{myCharacter.nickname}</color>";
+                  string message = $" {coloredNickname} : {chatInputField.text}\n";*/
+
+                // 폰트 크기 조정을 위해 <size> 태그 사용
+                Color playerColor = PlayerColor.GetColor(myCharacter.playercolor);
+                string coloredNickname = $"<size=27><color=#{ColorUtility.ToHtmlStringRGB(playerColor)}><b>{myCharacter.nickname}</b></color></size>";
                 string message = $" {coloredNickname} : {chatInputField.text}\n";
 
                 myCharacter.CmdSendChatMessage(message);
+
+               
             }
             chatInputField.text = "";
            // chatInputField.DeactivateInputField();

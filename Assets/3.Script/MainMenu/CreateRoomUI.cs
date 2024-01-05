@@ -83,6 +83,7 @@ public class CreateRoomUI : MonoBehaviour
     }
     public void updateMaxPlayerCount(int count)
     {
+        AudioManager.instance.PlaySFX("Next");
         roomData.maxPlayerCount = count;
         Debug.Log(count);
         for (int i = 0; i < maxPlayerCountBtn.Count; i++)
@@ -136,7 +137,7 @@ public class CreateRoomUI : MonoBehaviour
         // 1번 var manager = RoomManager.singleton;
         //캐스팅
         var manager = NetworkManager.singleton as RoomManager;
-
+        AudioManager.instance.PlaySFX("Next");
         //방설정 
         manager.minPlayerCount = roomData.imposterCount == 1 ? 4 : roomData.imposterCount == 2 ? 7 : 9;
         manager.imposterCount = roomData.imposterCount;

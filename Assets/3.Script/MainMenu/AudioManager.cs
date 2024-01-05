@@ -71,4 +71,24 @@ public class AudioManager : MonoBehaviour
         Debug.Log(p_sfxName + " 이름의 효과음이 없습니다.");
         return;
     }
+    public void StopSFX(string p_sfxName)
+    {
+        for (int i = 0; i < sfx.Length; i++)
+        {
+            if (p_sfxName==sfx[i].name)
+            {
+                for (int j = 0; j < sfxPlayer.Length; j++)
+                {
+                    if (sfxPlayer[j].isPlaying)
+                    {
+                        sfxPlayer[j].clip = sfx[i].clip;
+                        sfxPlayer[j].Stop();
+                        
+                    }
+                }
+                
+
+            }
+        }
+    }
 }

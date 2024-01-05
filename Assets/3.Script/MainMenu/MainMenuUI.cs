@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class MainMenuUI : MonoBehaviour
 {
-   public void OnClickOnineBtn()
+    private void Start()
     {
-        Debug.Log("Click Online");
+        AudioManager.instance.PlayBGM("MainBGM");
+    }
+    public void OnClickOnineBtn()
+    {
+        AudioManager.instance.PlaySFX("Next");
+        gameObject.SetActive(false);
+        
     }
     public void OnClickQuitBtn()
     {

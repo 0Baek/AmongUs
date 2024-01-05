@@ -13,7 +13,7 @@ public class GameSystem : NetworkBehaviour
     private Queue<string> chatMessages = new Queue<string>();
 
     [SyncVar]
-    public int maxMessageCount = 15;
+    public int maxMessageCount = 13;
 
     [SerializeField]
     private Transform spawnTransform;
@@ -97,6 +97,8 @@ public class GameSystem : NetworkBehaviour
     }
     private IEnumerator StartGameCoroutine()
     {
+        AudioManager.instance.StopBGM();
+
         yield return StartCoroutine(InGameUIManager.Instance.IngameintroUI.ShowIntroSequence());
 
         InGameCharacterMover myCharacter = null;
