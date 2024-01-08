@@ -10,44 +10,59 @@ public class Engine_Body : MonoBehaviour
 
     [SerializeField] public List<Sprite> sparksSprites = new List<Sprite>();
 
-    private int nowIndex = 0; //스파크 위치 저장할 변수
+    [SerializeField] private AudioSource steamSound;
 
+    private int nowIndex = 0; //스파크 위치 저장할 변수
+    //private bool playerNearby = false;
+    private bool isSteamCoroutineRunning = false;
 
     void Start()
     {
-        foreach(var steam in steams)
+        foreach (var steam in steams)
         {
             StartCoroutine(RandomSteam(steam));
         }
         StartCoroutine(SparkEngine());
+        
     }
     private IEnumerator RandomSteam(GameObject steam)
     {
-        while (true)
+        if (!isSteamCoroutineRunning)
         {
-            float timer = Random.Range(0.5f, 1.5f);
-            while (timer>=0f)
+            isSteamCoroutineRunning = true;
+
+            while (true)
             {
-                yield return null;
-                timer -= Time.deltaTime;
+                float timer = Random.Range(0.5f, 1.5f);
+                while (timer >= 0f)
+                {
+                    yield return null;
+                    timer -= Time.deltaTime;
+                }
+                steam.SetActive(true);
+               // steamSound.Play(); // 스팀이 나오면서 소리 재생
+                timer = 0f;
+                while (timer <= 0.6f)
+                {
+                    yield return null;
+                    timer += Time.deltaTime;
+                }
+                steam.SetActive(false);
+               // steamSound.Stop(); // 스팀이 사라지면서 소리 중지
+
+                isSteamCoroutineRunning = false;
             }
-            steam.SetActive(true);
-            timer = 0f;
-            while (timer <= 0.6f)
-            {
-                yield return null;
-                timer += Time.deltaTime;
-            }
-            steam.SetActive(false);
         }
+   
     }
+
     private IEnumerator SparkEngine()
     {
         WaitForSeconds wait = new WaitForSeconds(0.05f);
         while (true)
         {
             float timer = Random.Range(0.2f, 1.5f);
-            while (timer>=0f)
+            while (timer >= 0f)
             {
                 yield return null;
                 timer -= Time.deltaTime;
@@ -63,11 +78,32 @@ public class Engine_Body : MonoBehaviour
                 sparks[nowIndex].sprite = sparksSprites[indices[i]];
             }
             sparks[nowIndex++].sprite = null;
-            if (nowIndex>=sparks.Count)
+            if (nowIndex >= sparks.Count)
             {
                 nowIndex = 0;
             }
         }
     }
-   
+/*    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            playerNearby = true;
+            foreach (var steam in steams)
+            {
+                StartCoroutine(RandomSteam(steam));
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            playerNearby = false;
+            steamSound.Stop();
+        }
+    }*/
+
 }
+    

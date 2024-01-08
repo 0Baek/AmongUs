@@ -134,6 +134,7 @@ public class InGameCharacterMover : CharacterMover
     {
         playerType |= EPlayerType.Ghost;
         RpcDead(isEject, imposterColor, playercolor);
+       
         if (!isEject) // 추방으로 죽은게 아닐때만
         {
             var manager = NetworkRoomManager.singleton as RoomManager;
@@ -142,8 +143,7 @@ public class InGameCharacterMover : CharacterMover
             deadbody.RpcSetColor(playercolor);
             AudioManager.instance.PlaySFX("Kill");
         }
-  
-
+       
 
     }
 
@@ -180,7 +180,9 @@ public class InGameCharacterMover : CharacterMover
         if (collider)
         {
             collider.enabled = false;
+            audioSource.enabled = false;
         }
+       
     }
     public void Report()
     {

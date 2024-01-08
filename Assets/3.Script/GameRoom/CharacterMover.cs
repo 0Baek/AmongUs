@@ -68,6 +68,7 @@ public class CharacterMover : NetworkBehaviour
         spriteRenderer.material.SetColor("_PlayerColor", PlayerColor.GetColor(playercolor));
 
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
         if (isOwned)
         {
             Camera cam = Camera.main;
@@ -122,28 +123,22 @@ public class CharacterMover : NetworkBehaviour
                 }
                 
             }
-         
-          
 
-
-            animator.SetBool("isMove", isMove);
+               animator.SetBool("isMove", isMove);
             if (isMove)
             {
-                if (!audioSource.isPlaying)
-                {
-                    var myCharacter = AmongUsRoomplayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
-                    if ((myCharacter.playerType & EPlayerType.Ghost) != EPlayerType.Ghost)
+                // 만약 플레이어가 움직이고 있으면서 고스트가 아닌 경우에만 발사운드 재생
+              
+                    if (!audioSource.isPlaying)
                     {
                         audioSource.Play();
-
-                    }
-                }
+                     }
+                
             }
             else
             {
                 audioSource.Stop();
             }
-
 
 
 
