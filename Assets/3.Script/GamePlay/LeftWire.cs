@@ -6,10 +6,21 @@ using UnityEngine.UI;
 public class LeftWire : MonoBehaviour
 {
     public EWireColor WireColor { get; private set; }
+
+    public bool IsConnected { get; private set; }
+
     [SerializeField]
     private List<Image> mWireImages;
     [SerializeField]
     private RectTransform mWireBody;
+
+
+    [SerializeField]
+    private Image mLightImage;
+
+    [SerializeField]
+    private RightWire mConnectedWire;
+
 
 
 
@@ -29,9 +40,10 @@ public class LeftWire : MonoBehaviour
     {
         float angle = Vector2.SignedAngle(transform.position + Vector3.right - transform.position,
              targetPosition - transform.position);
-        float distance = (Vector2.Distance(mWireBody.transform.position, Input.mousePosition) - offset);
+        float distance = Vector2.Distance(mWireBody.transform.position, Input.mousePosition) - offset;
         mWireBody.localRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
-        mWireBody.sizeDelta = new Vector2(distance * (1 / mGameCanvas.transform.localScale.x), mWireBody.sizeDelta.y);
+        mWireBody.sizeDelta = new Vector2(distance, mWireBody.sizeDelta.y);
+       
     }
     public void ResetTarget()
     {
@@ -62,5 +74,29 @@ public class LeftWire : MonoBehaviour
         {
             image.color = color;
         }
+    }
+    public void ConnectWire(RightWire rightwire)
+    {
+        if (mConnectedWire != null &&mConnectedWire !=rightwire)
+        {
+            mConnectedWire.DisconnectWire(this);
+            mConnectedWire = null;
+        }
+        mConnectedWire = rightwire;
+        if (mConnectedWire.WireColor==WireColor)
+        {
+            mLightImage.color = new Color(0f,255f,185f,255f);
+            IsConnected = true;
+        }
+    }
+    public void DisconnectWire()
+    {
+        if (mConnectedWire != null)
+        {
+            mConnectedWire.DisconnectWire(this);
+            mConnectedWire = null;
+        }
+        mLightImage.color = Color.gray;
+        IsConnected = false;
     }
 }
