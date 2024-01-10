@@ -66,9 +66,9 @@ public class CreateRoomUI : MonoBehaviour
             if (i<limitMaxPlayer-4)
             {
                
-                Debug.Log(limitMaxPlayer);
+              
                 maxPlayerCountBtn[i].interactable = false;
-                Debug.Log(i);
+              
                 text.color = Color.gray;
             }
             else
@@ -137,12 +137,14 @@ public class CreateRoomUI : MonoBehaviour
         // 1번 var manager = RoomManager.singleton;
         //캐스팅
         var manager = NetworkManager.singleton as RoomManager;
-        AudioManager.instance.PlaySFX("Next");
+       // AudioManager.instance.PlaySFX("Next");
         //방설정 
         manager.minPlayerCount = roomData.imposterCount == 1 ? 4 : roomData.imposterCount == 2 ? 7 : 9;
         manager.imposterCount = roomData.imposterCount;
         manager.maxConnections = roomData.maxPlayerCount;
+        AudioManager.instance.PlaySFX("PlayerOn");
         manager.StartHost();
+       
     }
 
     

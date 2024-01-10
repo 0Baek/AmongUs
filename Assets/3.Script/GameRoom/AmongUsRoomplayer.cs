@@ -112,7 +112,7 @@ public class AmongUsRoomplayer : NetworkRoomPlayer
         }
         if (isLocalPlayer)
         {
-            AudioManager.instance.PlaySFX("PlayerOn");
+           
             CmdSetNickname(PlayerSettings.nickname);
         }
         
@@ -183,6 +183,7 @@ public class AmongUsRoomplayer : NetworkRoomPlayer
         //클라이언트들에게 이 게임 오브젝트가 소환되었음을 알림 
         //conn 접속한 플레이어의 정보 
         NetworkServer.Spawn(playerCharacter.gameObject, connectionToClient);
+        AudioManager.instance.PlaySFX("PlayerOn");
         playerCharacter.ownerNetld = netId;
         playerCharacter.playercolor = color;
        
