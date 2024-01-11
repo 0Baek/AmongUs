@@ -8,6 +8,8 @@ public class GameSystem : NetworkBehaviour
 {
     public static GameSystem instance;
 
+  
+
     private List<InGameCharacterMover> players = new List<InGameCharacterMover>();
 
     private Queue<string> chatMessages = new Queue<string>();
@@ -257,6 +259,7 @@ public class GameSystem : NetworkBehaviour
         {
             bool isImposter = (players[0].playerType & EPlayerType.Imposter) == EPlayerType.Imposter;
             RpcOpenEjectionUI(true, players[0].playercolor, isImposter, isImposter ? remainImposter - 1:remainImposter) ;
+          
 
             players[0].Dead(true);
         }
@@ -267,9 +270,11 @@ public class GameSystem : NetworkBehaviour
         }
         PlayerTable(players);
 
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
+     
 
         RpcCloseEjectionUI();
+     
 
     }
     //위 메서드는 서버에서 호출될 예정이기 때문에 Rpc 어트리뷰트를 만들어줘야한다.

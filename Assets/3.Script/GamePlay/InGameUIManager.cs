@@ -84,6 +84,16 @@ public class InGameUIManager : MonoBehaviour
     }
 
     [SerializeField]
+    private VictoryUI victoryUI;
+    public VictoryUI VictoryUi
+    {
+        get
+        {
+            return victoryUI;
+        }
+    }
+
+    [SerializeField]
     private Button _UseButton;
     [SerializeField]
     private Sprite _OriginUseButtonSprite;

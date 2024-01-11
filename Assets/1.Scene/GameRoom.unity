@@ -3141,7 +3141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncDirection: 0
   syncMode: 0
-  syncInterval: 0
+  syncInterval: 0.1
   isRuleToggle: {fileID: 1545278160}
   confirmEjectsToggle: {fileID: 744612140}
   emergencyMeetingsText: {fileID: 333469170}

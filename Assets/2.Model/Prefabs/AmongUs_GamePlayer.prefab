@@ -242,7 +242,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   audioSource: {fileID: 3555793840140633061}
-  speed: 2
+  speed: 1.5
   characterSize: 0.36
   cameraSize: 1.48
   playercolor: 0
