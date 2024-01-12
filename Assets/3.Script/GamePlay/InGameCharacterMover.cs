@@ -31,6 +31,12 @@ public class InGameCharacterMover : CharacterMover
             InGameUIManager.Instance.Kill_BtnUI.Show(this);
             playerFinder.SetkillRange(GameSystem.instance.killRange + 1f);
         }
+        else if(isOwned&&type ==EPlayerType.Imposter_Ghost)
+        {
+            InGameUIManager.Instance.Kill_BtnUI.Close(this);
+        }
+      
+       
     }
     [SerializeField]
     private PlayerFinder playerFinder;
@@ -142,6 +148,7 @@ public class InGameCharacterMover : CharacterMover
             NetworkServer.Spawn(deadbody.gameObject);
             deadbody.RpcSetColor(playercolor);
             AudioManager.instance.PlaySFX("Kill");
+           
         }
        
 

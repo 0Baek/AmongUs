@@ -39,6 +39,12 @@ public class Kill_BtnUI : MonoBehaviour
        
         targetplayer.Kill();
     }
+    public void Close(InGameCharacterMover player)
+    {
+
+        gameObject.SetActive(false);
+        targetplayer = player;
+    }
 
 
 

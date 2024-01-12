@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class VictoryUI : MonoBehaviour
 {
   
-
-  /*  [SerializeField]
+/*
+    [SerializeField]
     private GameObject crewmateObj;*/
 
     [SerializeField]
@@ -30,24 +30,21 @@ public class VictoryUI : MonoBehaviour
 
 
 
-  /*  public IEnumerator ShowIntroSequence()
+
+
+
+    private void Start()
     {
-
-     
-        AudioManager.instance.PlaySFX("Start");
-        yield return new WaitForSeconds(3f);
-      
-
         ShowPlayerType();
-        crewmateObj.SetActive(true);
-
-    }*/
+        
+    }
 
     public void ShowPlayerType()
     {
         var players = GameSystem.instance.GetPlayerList();
 
         InGameCharacterMover myPlayer = null;
+        
         foreach (var player in players)
         {
             if (player.isOwned)
@@ -56,9 +53,9 @@ public class VictoryUI : MonoBehaviour
                 break;
             }
         }
-        myCharacter.SetIntroCharacter(myPlayer.nickname, myPlayer.playercolor);
+        myCharacter.SetIntroCharacter(myPlayer.nickname, myPlayer.playercolor,myPlayer.playerType);
 
-        if (myPlayer.playerType == EPlayerType.Imposter)
+        if (myPlayer.playerType == EPlayerType.Imposter_Ghost)
         {
             playerType.text = "ÆÐ¹è";
             playerType.color = gradintImg.color = imposterColor;
@@ -66,9 +63,9 @@ public class VictoryUI : MonoBehaviour
             int i = 0;
             foreach (var player in players)
             {
-                if (!player.isOwned && player.playerType == EPlayerType.Imposter)
+                if (!player.isOwned && player.playerType == EPlayerType.Imposter_Ghost)
                 {
-                    otherCharacters[i].SetIntroCharacter(player.nickname, player.playercolor);
+                    otherCharacters[i].SetIntroCharacter(player.nickname, player.playercolor,player.playerType);
                     otherCharacters[i].gameObject.SetActive(true);
                     i++;
                 }
@@ -84,13 +81,15 @@ public class VictoryUI : MonoBehaviour
             {
                 if (!player.isOwned)
                 {
-                    otherCharacters[i].SetIntroCharacter(player.nickname, player.playercolor);
+                    otherCharacters[i].SetIntroCharacter(player.nickname, player.playercolor,player.playerType);
                     otherCharacters[i].gameObject.SetActive(true);
                     i++;
                 }
             }
         }
+        myPlayer.IsMoveable = false;
     }
- 
-  
+
+
+
 }

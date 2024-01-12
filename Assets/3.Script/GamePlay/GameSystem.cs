@@ -13,7 +13,7 @@ public class GameSystem : NetworkBehaviour
     private List<InGameCharacterMover> players = new List<InGameCharacterMover>();
 
     private Queue<string> chatMessages = new Queue<string>();
-
+  
     [SyncVar]
     public int maxMessageCount = 13;
 
@@ -123,7 +123,6 @@ public class GameSystem : NetworkBehaviour
     {
         return players;
     }
-    
 
     private void Awake()
     {
@@ -136,6 +135,22 @@ public class GameSystem : NetworkBehaviour
             StartCoroutine(GameReady());
         }
         
+    }
+    public bool CheckCrewExists()
+    {
+        var players = FindObjectsOfType<InGameCharacterMover>();
+
+        foreach (var player in players)
+        {
+            if (player.playerType == EPlayerType.Crew)
+            {
+                // 크루원이 존재하는 경우
+                return true;
+            }
+        }
+
+        // 크루원이 존재하지 않는 경우
+        return false;
     }
     public void ChangeLightMode(EPlayerType type)
     {
@@ -259,8 +274,8 @@ public class GameSystem : NetworkBehaviour
         {
             bool isImposter = (players[0].playerType & EPlayerType.Imposter) == EPlayerType.Imposter;
             RpcOpenEjectionUI(true, players[0].playercolor, isImposter, isImposter ? remainImposter - 1:remainImposter) ;
-          
 
+            
             players[0].Dead(true);
         }
         var deadbodys = FindObjectsOfType<Deadbody>();
@@ -271,10 +286,13 @@ public class GameSystem : NetworkBehaviour
         PlayerTable(players);
 
         yield return new WaitForSeconds(8f);
-     
+
 
         RpcCloseEjectionUI();
+        
      
+
+
 
     }
     //위 메서드는 서버에서 호출될 예정이기 때문에 Rpc 어트리뷰트를 만들어줘야한다.

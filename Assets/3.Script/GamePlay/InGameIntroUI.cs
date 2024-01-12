@@ -58,7 +58,7 @@ public class InGameIntroUI : MonoBehaviour
                 break;
             }
         }
-        myCharacter.SetIntroCharacter(myPlayer.nickname,myPlayer.playercolor);
+        myCharacter.SetIntroCharacter(myPlayer.nickname,myPlayer.playercolor,myPlayer.playerType);
 
         if (myPlayer.playerType == EPlayerType.Imposter)
         {
@@ -70,7 +70,7 @@ public class InGameIntroUI : MonoBehaviour
             {
                 if (!player.isOwned&&player.playerType==EPlayerType.Imposter)
                 {
-                    otherCharacters[i].SetIntroCharacter(player.nickname, player.playercolor);
+                    otherCharacters[i].SetIntroCharacter(player.nickname, player.playercolor,myPlayer.playerType);
                     otherCharacters[i].gameObject.SetActive(true);
                     i++;
                 }
@@ -86,7 +86,7 @@ public class InGameIntroUI : MonoBehaviour
             {
                 if (!player.isOwned )
                 {
-                    otherCharacters[i].SetIntroCharacter(player.nickname, player.playercolor);
+                    otherCharacters[i].SetIntroCharacter(player.nickname, player.playercolor,myPlayer.playerType);
                     otherCharacters[i].gameObject.SetActive(true);
                     i++;
                 }

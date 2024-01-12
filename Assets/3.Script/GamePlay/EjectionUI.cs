@@ -20,6 +20,7 @@ public class EjectionUI : MonoBehaviour
     [SerializeField]
     private GameObject Victory;
 
+
     private void Start()
     {
         ejectionPlayer.material = Instantiate(ejectionPlayer.material);
@@ -47,13 +48,17 @@ public class EjectionUI : MonoBehaviour
             text = string.Format("아무도 퇴출되지 않았습니다.\n임포스터가 {0}명 남았습니다.", remainImposterCount);
         }
      
-        StartCoroutine(SHowEjectionResult_Coroutine(ejectPlayer, text));
 
         if (remainImposterCount==0)
         {
 
             gameObject.SetActive(true);
             StartCoroutine(SHowEjectionResult_Coroutine2(ejectPlayer, text));
+        }
+        else
+        {
+            gameObject.SetActive(true);
+            StartCoroutine(SHowEjectionResult_Coroutine(ejectPlayer, text));
         }
       
     }
@@ -132,9 +137,10 @@ public class EjectionUI : MonoBehaviour
            
         }
         yield return new WaitForSeconds(2f);
-        Victory.SetActive(true);
-        InGameUIManager.Instance.VictoryUi.ShowPlayerType();
-    }
+        Victory.SetActive(true);  
+     
+       
+     }
     public void Close()
     {
         gameObject.SetActive(false);
