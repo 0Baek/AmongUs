@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VictoryUI : MonoBehaviour
+public class ImposterVictory : MonoBehaviour
 {
-  
-/*
-    [SerializeField]
-    private GameObject crewmateObj;*/
 
     [SerializeField]
     private Text playerType;
@@ -29,22 +25,20 @@ public class VictoryUI : MonoBehaviour
     private Color imposterColor;
 
 
-
-
-
-
-    private void Start()
+    private void OnEnable()
     {
-        ShowCrewVIctory();
-        
+        ShowImposterVictory();
+
     }
 
-    public void ShowCrewVIctory()
+
+
+    public void ShowImposterVictory()
     {
         var players = GameSystem.instance.GetPlayerList();
 
         InGameCharacterMover myPlayer = null;
-        
+
         foreach (var player in players)
         {
             if (player.isOwned)
@@ -53,19 +47,19 @@ public class VictoryUI : MonoBehaviour
                 break;
             }
         }
-        myCharacter.SetIntroCharacter(myPlayer.nickname, myPlayer.playercolor,myPlayer.playerType);
+        myCharacter.SetIntroCharacter(myPlayer.nickname, myPlayer.playercolor, myPlayer.playerType);
 
-        if (myPlayer.playerType == EPlayerType.Imposter_Ghost)
+        if (myPlayer.playerType == EPlayerType.Imposter || myPlayer.playerType == EPlayerType.Imposter_Ghost)
         {
-            playerType.text = "ÆÐ¹è";
+            playerType.text = "½Â¸®";
             playerType.color = gradintImg.color = imposterColor;
 
             int i = 0;
             foreach (var player in players)
             {
-                if (!player.isOwned && player.playerType == EPlayerType.Imposter_Ghost)
+                if (!player.isOwned && (player.playerType == EPlayerType.Imposter || player.playerType == EPlayerType.Imposter_Ghost))
                 {
-                    otherCharacters[i].SetIntroCharacter(player.nickname, player.playercolor,player.playerType);
+                    otherCharacters[i].SetIntroCharacter(player.nickname, player.playercolor, player.playerType);
                     otherCharacters[i].gameObject.SetActive(true);
                     i++;
                 }
@@ -73,7 +67,7 @@ public class VictoryUI : MonoBehaviour
         }
         else
         {
-            playerType.text = "½Â¸®";
+            playerType.text = "ÆÐ¹è";
             playerType.color = gradintImg.color = crewColor;
 
             int i = 0;
@@ -81,16 +75,15 @@ public class VictoryUI : MonoBehaviour
             {
                 if (!player.isOwned)
                 {
-                    otherCharacters[i].SetIntroCharacter(player.nickname, player.playercolor,player.playerType);
+                    otherCharacters[i].SetIntroCharacter(player.nickname, player.playercolor, player.playerType);
                     otherCharacters[i].gameObject.SetActive(true);
                     i++;
                 }
             }
         }
-        AudioManager.instance.PlaySFX("CrewVictory");
+        AudioManager.instance.PlaySFX("ImposterVictory");
+            
         myPlayer.IsMoveable = false;
     }
-
-
 
 }

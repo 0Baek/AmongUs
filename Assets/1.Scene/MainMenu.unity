@@ -13582,7 +13582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3726572489225159109, guid: 00f4ced7e3238a643935353bb50bdbda, type: 3}
       propertyPath: sfx.Array.size
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3726572489225159109, guid: 00f4ced7e3238a643935353bb50bdbda, type: 3}
       propertyPath: bgm.Array.data[1].clip
@@ -13671,6 +13671,22 @@ PrefabInstance:
     - target: {fileID: 3726572489225159109, guid: 00f4ced7e3238a643935353bb50bdbda, type: 3}
       propertyPath: sfx.Array.data[11].name
       value: Next
+      objectReference: {fileID: 0}
+    - target: {fileID: 3726572489225159109, guid: 00f4ced7e3238a643935353bb50bdbda, type: 3}
+      propertyPath: sfx.Array.data[12].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 4d2786105accc6744b248944e2d8e3da, type: 3}
+    - target: {fileID: 3726572489225159109, guid: 00f4ced7e3238a643935353bb50bdbda, type: 3}
+      propertyPath: sfx.Array.data[12].name
+      value: CrewVictory
+      objectReference: {fileID: 0}
+    - target: {fileID: 3726572489225159109, guid: 00f4ced7e3238a643935353bb50bdbda, type: 3}
+      propertyPath: sfx.Array.data[13].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 60756df1e5780cf4783d55b479939f28, type: 3}
+    - target: {fileID: 3726572489225159109, guid: 00f4ced7e3238a643935353bb50bdbda, type: 3}
+      propertyPath: sfx.Array.data[13].name
+      value: ImposterVictory
       objectReference: {fileID: 0}
     - target: {fileID: 3726572489225159110, guid: 00f4ced7e3238a643935353bb50bdbda, type: 3}
       propertyPath: m_RootOrder

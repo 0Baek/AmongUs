@@ -18,14 +18,18 @@ public class EjectionUI : MonoBehaviour
     private RectTransform right;
 
     [SerializeField]
-    private GameObject Victory;
+    private GameObject crewVictory;
+
+    [SerializeField]
+    private GameObject imposterVictory;
+
 
 
     private void Start()
     {
         ejectionPlayer.material = Instantiate(ejectionPlayer.material);
     }
-    public void Open(bool isEjection, EPlayerColor ejectionPlayerColor,bool isImposter,int remainImposterCount)
+    public void Open(bool isEjection, EPlayerColor ejectionPlayerColor, bool isImposter, int remainImposterCount,int remainCrewCount)
     {
         string text = "";
         InGameCharacterMover ejectPlayer = null;
@@ -34,7 +38,7 @@ public class EjectionUI : MonoBehaviour
             InGameCharacterMover[] players = FindObjectsOfType<InGameCharacterMover>();
             foreach (var player in players)
             {
-                if (player.playercolor==ejectionPlayerColor)
+                if (player.playercolor == ejectionPlayerColor)
                 {
                     ejectPlayer = player;
                     break;
@@ -43,24 +47,34 @@ public class EjectionUI : MonoBehaviour
             text = string.Format("{0}은 임포스터{1}\n임포스터가 {2}명 남았습니다.",
                 ejectPlayer.nickname, isImposter ? "입니다." : "가 아니었습니다.", remainImposterCount);
         }
+
         else
         {
             text = string.Format("아무도 퇴출되지 않았습니다.\n임포스터가 {0}명 남았습니다.", remainImposterCount);
         }
-     
 
-        if (remainImposterCount==0)
+
+        if (remainImposterCount == 0)
         {
 
             gameObject.SetActive(true);
-            StartCoroutine(SHowEjectionResult_Coroutine2(ejectPlayer, text));
+            StartCoroutine(SHowEjectionResult_Coroutine2(ejectPlayer, text, false));
         }
         else
         {
             gameObject.SetActive(true);
             StartCoroutine(SHowEjectionResult_Coroutine(ejectPlayer, text));
         }
-      
+        if (remainCrewCount==0)
+        {
+            gameObject.SetActive(true);
+            StartCoroutine(SHowEjectionResult_Coroutine2(ejectPlayer, text, true));
+        }
+        else
+        {
+            gameObject.SetActive(true);
+            StartCoroutine(SHowEjectionResult_Coroutine(ejectPlayer, text));
+        }
     }
     private IEnumerator SHowEjectionResult_Coroutine(InGameCharacterMover ejectionPlayerMover,string text)
     {
@@ -99,7 +113,7 @@ public class EjectionUI : MonoBehaviour
         }
        
     }
-    private IEnumerator SHowEjectionResult_Coroutine2(InGameCharacterMover ejectionPlayerMover, string text)
+    private IEnumerator SHowEjectionResult_Coroutine2(InGameCharacterMover ejectionPlayerMover, string text,bool isVictory)
     {
         ejectionResultText.text = "";
 
@@ -137,10 +151,18 @@ public class EjectionUI : MonoBehaviour
            
         }
         yield return new WaitForSeconds(2f);
-        Victory.SetActive(true);  
-     
-       
-     }
+        if (!isVictory)
+        {
+            crewVictory.SetActive(true);
+
+        }
+        else
+        {
+            imposterVictory.SetActive(true);
+        }
+
+
+    }
     public void Close()
     {
         gameObject.SetActive(false);

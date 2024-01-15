@@ -32,6 +32,8 @@ public class GameSystem : NetworkBehaviour
     [SyncVar]
     public float remainTime;
 
+
+
     [SerializeField]
     private Light2D shadowLight;
     [SerializeField]
@@ -136,7 +138,7 @@ public class GameSystem : NetworkBehaviour
         }
         
     }
-    public bool CheckCrewExists()
+  /*  public bool CheckCrewExists()
     {
         var players = FindObjectsOfType<InGameCharacterMover>();
 
@@ -151,10 +153,16 @@ public class GameSystem : NetworkBehaviour
 
         // 크루원이 존재하지 않는 경우
         return false;
-    }
+    }*/
     public void ChangeLightMode(EPlayerType type)
     {
-        if (type==EPlayerType.Ghost)
+        if (type == EPlayerType.Ghost)
+        {
+            lightMapLight.lightType = Light2D.LightType.Global;
+            shadowLight.intensity = 0f;
+            globalLight.intensity = 1f;
+        }
+        else if (type == EPlayerType.Imposter_Ghost)
         {
             lightMapLight.lightType = Light2D.LightType.Global;
             shadowLight.intensity = 0f;
@@ -235,7 +243,7 @@ public class GameSystem : NetworkBehaviour
 
         StartCoroutine(CalculateVoteResult_Coroutine(players));
     }
-    private class CharacterVoteComparer : IComparer
+    public class CharacterVoteComparer : IComparer
     {
         public int Compare(object x, object y)
         {
@@ -245,35 +253,41 @@ public class GameSystem : NetworkBehaviour
         }
     }
 
-    private IEnumerator CalculateVoteResult_Coroutine(InGameCharacterMover[] players)
+        private IEnumerator CalculateVoteResult_Coroutine(InGameCharacterMover[] players)
     {
         System.Array.Sort(players, new CharacterVoteComparer());
 
         int remainImposter = 0;
+        int remainCrew = 0;
+
         foreach(var player in players)
         {
-            if ((player.playerType&EPlayerType.Imposter_Alive )== EPlayerType.Imposter_Alive)
+            if ((player.playerType & EPlayerType.Imposter_Alive) == EPlayerType.Imposter_Alive)
             {
                 remainImposter++;
+            }
+            else if (player.playerType == EPlayerType.Crew)
+            {
+                remainCrew++;
             }
         }
         //스킵 표 수가 가장 많이 받은 표 수보다  많거나 같다면 플레이어는 추방 당하지 않는다.
 
         if (skipVotePlayerCount >= players[0].vote)
         {
-            RpcOpenEjectionUI(false, EPlayerColor.Black, false, remainImposter);
+            RpcOpenEjectionUI(false, EPlayerColor.Black, false, remainImposter,remainCrew);
         }
         //가장 많은 표를 받은 플레이어와 2순위 플레이어가 동률인 경우도 추방이 이루어지지 않는다.
 
         else if(players[0].vote == players[1].vote)
         {
-            RpcOpenEjectionUI(false, EPlayerColor.Black, false, remainImposter);
+            RpcOpenEjectionUI(false, EPlayerColor.Black, false, remainImposter,remainCrew);
         }
         //스킵 표와 2순위 표보다 1순위 표가 많은 경우에는  1순위 플레이어를 추방 시킨다.
         else
         {
             bool isImposter = (players[0].playerType & EPlayerType.Imposter) == EPlayerType.Imposter;
-            RpcOpenEjectionUI(true, players[0].playercolor, isImposter, isImposter ? remainImposter - 1:remainImposter) ;
+            RpcOpenEjectionUI(true, players[0].playercolor, isImposter, isImposter ? remainImposter - 1:remainImposter,remainCrew) ;
 
             
             players[0].Dead(true);
@@ -297,9 +311,9 @@ public class GameSystem : NetworkBehaviour
     }
     //위 메서드는 서버에서 호출될 예정이기 때문에 Rpc 어트리뷰트를 만들어줘야한다.
     [ClientRpc]
-    public void RpcOpenEjectionUI(bool isEjection,EPlayerColor ejectionPlayerColor, bool isImposter,int remainImposterCount)
+    public void RpcOpenEjectionUI(bool isEjection,EPlayerColor ejectionPlayerColor, bool isImposter,int remainImposterCount,int remainCrewCount)
     {
-        InGameUIManager.Instance.EjectionUI.Open(isEjection,ejectionPlayerColor,isImposter,remainImposterCount);
+        InGameUIManager.Instance.EjectionUI.Open(isEjection,ejectionPlayerColor,isImposter,remainImposterCount,remainCrewCount);
         InGameUIManager.Instance.MeetingUI.Close();
     }
     [ClientRpc]

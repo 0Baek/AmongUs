@@ -115,6 +115,9 @@ public class InGameCharacterMover : CharacterMover
     {
         CmdKill(playerFinder.GetFirstTarget().netId);
     }
+
+    [SerializeField]
+    private GameObject ImposterVictory;
     [Command]
     private void CmdKill(uint targetNetId)
     {
@@ -136,6 +139,7 @@ public class InGameCharacterMover : CharacterMover
       
 
     }
+ 
     public void Dead(bool isEject,EPlayerColor imposterColor=EPlayerColor.Black)
     {
         playerType |= EPlayerType.Ghost;
@@ -174,6 +178,7 @@ public class InGameCharacterMover : CharacterMover
                 }
             }
             GameSystem.instance.ChangeLightMode(EPlayerType.Ghost);
+            GameSystem.instance.ChangeLightMode(EPlayerType.Imposter_Ghost);
         }
         else
         {

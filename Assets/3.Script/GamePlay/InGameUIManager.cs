@@ -92,6 +92,7 @@ public class InGameUIManager : MonoBehaviour
             return victoryUI;
         }
     }
+  
 
     [SerializeField]
     private Button _UseButton;

@@ -65,7 +65,7 @@ public class RightWire : MonoBehaviour
         mConnectedWires.Remove(leftWire);
         if (mConnectedWires.Count==1&&mConnectedWires[0].WireColor==WireColor)
         {
-            mLightImage.color = Color.yellow;
+            mLightImage.color = new Color(0f, 255f, 185f, 255f);
             IsConnected = true;
         }
         else
