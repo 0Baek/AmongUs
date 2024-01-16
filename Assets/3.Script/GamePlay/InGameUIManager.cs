@@ -92,6 +92,15 @@ public class InGameUIManager : MonoBehaviour
             return victoryUI;
         }
     }
+    [SerializeField]
+    private ImposterVictory imposterVictory;
+    public ImposterVictory ImposterVictory
+    {
+        get
+        {
+            return imposterVictory;
+        }
+    }
   
 
     [SerializeField]

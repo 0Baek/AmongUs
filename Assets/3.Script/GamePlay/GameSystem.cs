@@ -292,6 +292,7 @@ public class GameSystem : NetworkBehaviour
             
             players[0].Dead(true);
         }
+      
         var deadbodys = FindObjectsOfType<Deadbody>();
         for (int i = 0; i < deadbodys.Length; i++)
         {
@@ -308,6 +309,37 @@ public class GameSystem : NetworkBehaviour
 
 
 
+    }
+    public IEnumerator ImposterVictory(InGameCharacterMover[] players)
+    {
+        System.Array.Sort(players, new CharacterVoteComparer());
+
+       
+        int remainCrew = 0;
+
+        foreach (var player in players)
+        {
+            if (player.playerType == EPlayerType.Crew)
+            {
+                remainCrew++;
+            }
+        }
+        foreach (var player in players)
+        {
+            if (player.playerType == EPlayerType.Crew)
+            {
+                remainCrew--;
+                player.Kill(); // 또는 Kill 메서드 호출
+            }
+        }
+        yield return new WaitForSeconds(2f);
+        // remainCrew를 Rpc 메서드로 전달
+        RpcImposterVictory(remainCrew);
+    }
+    [ClientRpc]
+    public void RpcImposterVictory(int remainCrew)
+    {
+        InGameUIManager.Instance.KillUI.Open2(remainCrew);
     }
     //위 메서드는 서버에서 호출될 예정이기 때문에 Rpc 어트리뷰트를 만들어줘야한다.
     [ClientRpc]

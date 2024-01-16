@@ -123,18 +123,34 @@ public class InGameCharacterMover : CharacterMover
     {
 
         InGameCharacterMover target = null;
+        bool anyCrewRemaining = false;
         foreach (var player in GameSystem.instance.GetPlayerList())
         {
             if (player.netId == targetNetId)
             {
                 target = player;
             }
+            if (player.playerType == EPlayerType.Crew)
+            {
+                anyCrewRemaining = true;
+                break;
+            }
         }
         if (target !=null)
         {
             RpcTeleport(target.transform.position);
-            target.Dead(false,playercolor);
-            killCooldown = GameSystem.instance.killCooldown;
+            // Crew 타입의 플레이어가 더 이상 존재하지 않으면 특별한 동작 수행
+            if (!anyCrewRemaining)
+            {
+                // 여기에 특별한 동작을 추가
+                // 예: Imposter의 승리 처리 등
+              
+            }
+            else
+            {
+                target.Dead(false, playercolor);
+                killCooldown = GameSystem.instance.killCooldown;
+            }
         }
       
 

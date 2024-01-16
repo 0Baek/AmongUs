@@ -14,6 +14,9 @@ public class KillUI : MonoBehaviour
     [SerializeField]
     private Material material;
 
+    [SerializeField]
+    private GameObject ImposterVictory;
+
     public void Open(EPlayerColor imposter,EPlayerColor crewmate)
     {
         AmongUsRoomplayer.MyRoomPlayer.myCharacter.IsMoveable = false;
@@ -29,6 +32,13 @@ public class KillUI : MonoBehaviour
         crewmateImg.material.SetColor("_PlayerColor", PlayerColor.GetColor(crewmate));
 
         Invoke("Close", 3f);
+    }
+    public void Open2(int remainCrew)
+    {
+        if (remainCrew==0)
+        {
+            ImposterVictory.SetActive(true);
+        }
     }
     public void Close()
     {
